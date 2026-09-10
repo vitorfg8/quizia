@@ -33,4 +33,5 @@ include(":feature:llmsetup")
 include(":feature:home")
 include(":feature:quiz")
 include(":feature:results")
+include(":feature:settings")
  

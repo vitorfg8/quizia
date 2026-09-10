@@ -53,6 +53,7 @@ dependencies {
     kover(project(":feature:home"))
     kover(project(":feature:quiz"))
     kover(project(":feature:results"))
+    kover(project(":feature:settings"))
 }
 
 kover {
@@ -103,6 +104,7 @@ kover {
                     "com.vitorfg8.quizia.feature.llmsetup.di",
                     "com.vitorfg8.quizia.feature.quiz.di",
                     "com.vitorfg8.quizia.feature.results.di",
+                    "com.vitorfg8.quizia.feature.settings.di",
                 )
                 annotatedBy("androidx.compose.runtime.Composable")
             }
