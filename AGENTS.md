@@ -127,7 +127,7 @@ Screen composables **must not** contain business logic. They observe `uiState` a
 ### Design system
 
 - Never use hardcoded colors (`Color(0xFF…)`, `Color.Red`, etc.)
-- Never use hardcoded dimensions (`16.dp`, `24.sp`, etc.) outside `:designsystem`
+- Never use hardcoded dimensions (`16.dp`, `24.sp`, etc.) — use `QuiziaTheme.spacing.*` for gaps and `QuiziaTheme.sizes.*` for component dimensions; literals are allowed only in the `:designsystem` token files, and every value must be a multiple of 4.dp
 - Never use hardcoded strings in composables — always use `stringResource(R.string.…)`
 - Never call `MaterialTheme.*` inside `:feature:*` — use `QuiziaTheme.*`
 

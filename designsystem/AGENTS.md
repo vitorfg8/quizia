@@ -37,22 +37,59 @@ fun QuiziaTheme(
 | `QuiziaColors.kt` | `LightColorScheme` and `DarkColorScheme` (Material3 `ColorScheme`) |
 | `QuiziaTypography.kt` | `QuiziaTypography` (`Typography` object with all text styles) |
 | `QuiziaShapes.kt` | `QuiziaShapes` (`Shapes` object) |
-| `QuiziaSpacing.kt` | `QuiziaSpacing` object with named spacing constants |
-| `QuiziaTheme.kt` | `QuiziaTheme` composable + `LocalQuiziaSpacing` `CompositionLocal` |
+| `Spacing.kt` | `QuiziaSpacing` — gaps, margins and padding |
+| `Size.kt` | `QuiziaSizes` — fixed component dimensions and elevations |
+| `Theme.kt` | `QuiziaTheme` composable + every `CompositionLocal` |
 
-### QuiziaSpacing example
+### The 4.dp grid
+
+**Every dimension in the design system must be a multiple of 4.dp.** This keeps components
+aligned to the same grid regardless of which token they use.
 
 ```kotlin
-object QuiziaSpacing {
-    val extraSmall = 4.dp
-    val small = 8.dp
-    val medium = 16.dp
-    val large = 24.dp
-    val extraLarge = 32.dp
-}
+@Immutable
+data class QuiziaSpacing(
+    val extraSmall: Dp = 4.dp,
+    val small: Dp = 8.dp,
+    val medium: Dp = 16.dp,
+    val large: Dp = 24.dp,
+    val extraLarge: Dp = 32.dp,
+    val huge: Dp = 48.dp,
+)
+
+@Immutable
+data class QuiziaSizes(
+    val iconSmall: Dp = 16.dp,
+    val iconMedium: Dp = 24.dp,
+    val iconLarge: Dp = 40.dp,
+    val iconHuge: Dp = 96.dp,
+    val buttonHeight: Dp = 52.dp,
+    val minTouchTarget: Dp = 48.dp,
+    val progressBarHeight: Dp = 8.dp,
+    val elevationNone: Dp = 0.dp,
+    val elevationRaised: Dp = 4.dp,
+)
 ```
 
-Access via `QuiziaTheme.spacing.medium` — **never** use literal `dp` values in feature or component code.
+Use `QuiziaTheme.spacing.*` for the space **between** or **around** elements, and
+`QuiziaTheme.sizes.*` for the intrinsic dimensions **of** an element (icon size, component
+height, elevation).
+
+A literal `dp` value is only allowed inside `Spacing.kt`, `Size.kt` and `Shape.kt`. Anywhere
+else — including `:designsystem` components — it is a violation:
+
+```kotlin
+// Wrong
+Modifier.size(40.dp)
+CardDefaults.cardElevation(defaultElevation = 0.dp)
+
+// Right
+Modifier.size(QuiziaTheme.sizes.iconLarge)
+CardDefaults.cardElevation(defaultElevation = QuiziaTheme.sizes.elevationNone)
+```
+
+When a component needs a dimension that no token covers, add a named token to `QuiziaSizes`
+rounded to the nearest multiple of 4.dp — never inline the literal.
 
 ---
 
@@ -167,7 +204,8 @@ fun LlmProviderRadioItem(
 ## Usage Rules
 
 1. **No hardcoded colors** — use `QuiziaTheme.colorScheme.*` only
-2. **No hardcoded dimensions** — use `QuiziaTheme.spacing.*` or `QuiziaShapes.*` only
+2. **No hardcoded dimensions** — use `QuiziaTheme.spacing.*`, `QuiziaTheme.sizes.*` or
+   `QuiziaTheme.shapes.*` only; all token values are multiples of 4.dp
 3. **No hardcoded strings** — all labels via `stringResource(R.string.…)`
 4. **No raw Material3 components** in `:feature:*` — always use the Quizia wrapper components above
 5. When a new shared component is needed, add it to `:designsystem` first, then use it in features
