@@ -24,4 +24,10 @@ dependencyResolutionManagement {
 
 rootProject.name = "Quizia"
 include(":app")
+include(":designsystem")
+include(":core:domain")
+include(":core:data")
+include(":feature:welcome")
+include(":feature:llmsetup")
+include(":feature:home")
  

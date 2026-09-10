@@ -33,6 +33,9 @@ generativeai = "0.9.0"
 # Coroutines
 coroutines = "1.11.0"
 
+# Lifecycle Compose
+lifecycleRuntimeCompose = "2.11.0"
+
 # Quality
 detekt = "1.23.8"
 kover = "0.9.9"
@@ -81,8 +84,12 @@ gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 generativeai = { group = "com.google.ai.client.generativeai", name = "generativeai", version.ref = "generativeai" }
 
 # Coroutines
+kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
+
+# Lifecycle Compose
+androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycleRuntimeCompose" }
 
 # Test
 junit = { group = "junit", name = "junit", version.ref = "junit" }
