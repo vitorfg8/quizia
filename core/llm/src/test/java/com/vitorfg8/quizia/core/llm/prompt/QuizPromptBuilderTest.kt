@@ -42,6 +42,21 @@ class QuizPromptBuilderTest {
     }
 
     @Test
+    fun `current events are limited to recent global news`() {
+        val actual = builder.build(buildRequest(category = QuizCategory.CURRENT_EVENTS))
+        assertTrue(actual.contains("current events"))
+        assertTrue(actual.contains("last 12 months"))
+        assertTrue(actual.contains("widely reported global news"))
+    }
+
+    @Test
+    fun `other categories do not mention the current events window`() {
+        val actual = builder.build(buildRequest(category = QuizCategory.NATURE))
+        assertTrue(actual.contains("nature and the living world"))
+        assertTrue(!actual.contains("last 12 months"))
+    }
+
+    @Test
     fun `the prompt describes the json contract`() {
         val actual = builder.build(buildRequest())
         assertTrue(actual.contains("\"correctIndex\""))

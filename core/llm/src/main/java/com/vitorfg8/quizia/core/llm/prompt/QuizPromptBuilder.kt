@@ -16,6 +16,7 @@ class QuizPromptBuilder {
             "Generate exactly ${request.questionCount} multiple choice questions about " +
                 "${request.category.toPromptTopic()}.",
         )
+        appendCurrentEventsRules(request.category)
         appendLine("Write every question and every option in ${request.language.toLanguageName()}.")
         appendLine("Each question must have exactly ${Question.OPTIONS_PER_QUESTION} options.")
         appendLine("Exactly one option must be correct.")
@@ -25,6 +26,14 @@ class QuizPromptBuilder {
         append(JSON_CONTRACT)
     }
 
+    private fun StringBuilder.appendCurrentEventsRules(category: QuizCategory) {
+        if (category != QuizCategory.CURRENT_EVENTS) return
+        appendLine(
+            "Cover only widely reported global news from the last $CURRENT_EVENTS_MONTHS months.",
+        )
+        appendLine("Skip rumors, local politics, speculation and events older than that window.")
+    }
+
     private fun QuizCategory.toPromptTopic(): String = when (this) {
         QuizCategory.GENERAL_KNOWLEDGE -> "general knowledge"
         QuizCategory.HISTORY_AND_GEOGRAPHY -> "history and geography"
@@ -32,6 +41,10 @@ class QuizPromptBuilder {
         QuizCategory.MOVIES_AND_TV -> "movies and TV series"
         QuizCategory.SPORTS -> "sports"
         QuizCategory.ASTRONOMY -> "astronomy"
+        QuizCategory.NATURE -> "nature and the living world"
+        QuizCategory.TECHNOLOGY -> "technology"
+        QuizCategory.GAMES -> "video games"
+        QuizCategory.CURRENT_EVENTS -> "current events"
     }
 
     private fun String.toLanguageName(): String = when (this) {
@@ -41,6 +54,7 @@ class QuizPromptBuilder {
 
     private companion object {
         const val PORTUGUESE_TAG = "pt"
+        const val CURRENT_EVENTS_MONTHS = 12
         val JSON_CONTRACT = """
             {"questions":[{"text":"...","options":["...","...","...","..."],"correctIndex":0}]}
         """.trimIndent()
