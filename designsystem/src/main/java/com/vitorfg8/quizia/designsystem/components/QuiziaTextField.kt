@@ -32,6 +32,7 @@ fun QuiziaTextField(
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     trailingIcon: @Composable (() -> Unit)? = null,
     singleLine: Boolean = true,
+    enabled: Boolean = true,
 ) {
     OutlinedTextField(
         value = value,
@@ -42,6 +43,7 @@ fun QuiziaTextField(
         keyboardOptions = keyboardOptions,
         trailingIcon = trailingIcon,
         singleLine = singleLine,
+        enabled = enabled,
         shape = QuiziaTheme.shapes.medium,
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = QuiziaTheme.colorScheme.primary,
