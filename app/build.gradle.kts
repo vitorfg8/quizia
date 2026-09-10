@@ -16,8 +16,8 @@ android {
         applicationId = "com.vitorfg8.quizia"
         minSdk = 26
         targetSdk = 37
-        versionCode = 1
-        versionName = "0.1.0"
+        versionCode = 2
+        versionName = "0.2.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -49,6 +49,7 @@ dependencies {
     implementation(project(":feature:home"))
     implementation(project(":feature:quiz"))
     implementation(project(":feature:results"))
+    implementation(project(":feature:settings"))
 
     // Compose
     implementation(platform(libs.androidx.compose.bom))

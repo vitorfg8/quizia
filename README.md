@@ -80,4 +80,4 @@ cd quizia
 
 ## Version
 
-**0.1.0** — pre-release; breaking changes may occur between minor versions.
+**0.2.0** — pre-release; breaking changes may occur between minor versions.

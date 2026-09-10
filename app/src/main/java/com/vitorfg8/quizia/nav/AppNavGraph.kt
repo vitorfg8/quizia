@@ -12,6 +12,7 @@ import com.vitorfg8.quizia.feature.home.HomeRoute
 import com.vitorfg8.quizia.feature.llmsetup.LlmSetupRoute
 import com.vitorfg8.quizia.feature.quiz.QuizRoute
 import com.vitorfg8.quizia.feature.results.ResultsRoute
+import com.vitorfg8.quizia.feature.settings.SettingsRoute
 import com.vitorfg8.quizia.feature.welcome.WelcomeScreen
 
 @Composable
@@ -48,8 +49,12 @@ internal fun AppNavGraph(
                 onCategoryClick = { category ->
                     navController.navigate(AppRoute.buildQuizRoute(category.name))
                 },
-                onSettingsClick = { /* The settings screen is not implemented yet. */ },
+                onSettingsClick = { navController.navigate(AppRoute.SETTINGS) },
             )
+        }
+
+        composable(AppRoute.SETTINGS) {
+            SettingsRoute(onBack = { navController.popBackStack() })
         }
 
         composable(

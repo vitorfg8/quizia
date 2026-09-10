@@ -4,6 +4,7 @@ internal object AppRoute {
     const val WELCOME = "welcome"
     const val LLM_SETUP = "llm_setup"
     const val HOME = "home"
+    const val SETTINGS = "settings"
 
     const val ARG_CATEGORY = "category"
     const val ARG_SCORE = "score"

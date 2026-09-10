@@ -1,6 +1,7 @@
 package com.vitorfg8.quizia
 
 import com.vitorfg8.quizia.core.domain.model.AppSettings
+import com.vitorfg8.quizia.core.domain.model.AppTheme
 import com.vitorfg8.quizia.core.domain.repository.SettingsRepository
 import io.mockk.every
 import io.mockk.mockk
@@ -55,5 +56,21 @@ class MainViewModelTest {
         val viewModel = MainViewModel(mockSettingsRepository)
         val actual = viewModel.isFirstRun.filterNotNull().first()
         assertEquals(false, actual)
+    }
+
+    @Test
+    fun `theme starts as system until settings are loaded`() {
+        every { mockSettingsRepository.observeSettings() } returns flowOf()
+        val viewModel = MainViewModel(mockSettingsRepository)
+        assertEquals(AppTheme.SYSTEM, viewModel.theme.value)
+    }
+
+    @Test
+    fun `theme follows the stored preference`() = runTest {
+        every { mockSettingsRepository.observeSettings() } returns
+            flowOf(AppSettings(theme = AppTheme.DARK))
+        val viewModel = MainViewModel(mockSettingsRepository)
+        val actual = viewModel.theme.first { theme -> theme == AppTheme.DARK }
+        assertEquals(AppTheme.DARK, actual)
     }
 }
