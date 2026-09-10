@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_title">Quizia</string>
+    <string name="home_settings_content_description">Configurações</string>
+
+    <string name="category_general_knowledge">Conhecimentos Gerais</string>
+    <string name="category_history_geography">História e Geografia</string>
+    <string name="category_international_music">Música Internacional</string>
+    <string name="category_movies_tv">Filmes e Séries</string>
+    <string name="category_sports">Esportes</string>
+    <string name="category_astronomy">Astronomia</string>
+</resources>
