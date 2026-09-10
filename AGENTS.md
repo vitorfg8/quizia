@@ -147,6 +147,78 @@ Screen composables **must not** contain business logic. They observe `uiState` a
 
 ---
 
+## Versioning & Commits
+
+### Semantic Versioning
+
+The app version follows [SemVer 2.0.0](https://semver.org): `MAJOR.MINOR.PATCH`.
+
+- `versionName` in `app/build.gradle.kts` is the full SemVer string — never a partial version like `1.0`
+- **MAJOR** — an incompatible change to stored data (DataStore keys, `ApiKeyStore` entries) or the removal of a user-facing feature
+- **MINOR** — a new backwards-compatible capability: a new screen, LLM provider, or quiz category
+- **PATCH** — bug fixes and internal changes with no user-facing feature change
+- While the app is pre-`1.0.0` it is unstable, so breaking changes bump **MINOR** instead of MAJOR
+- `versionCode` is a monotonically increasing integer, bumped on every release; it is never reused or decreased
+
+### Conventional Commits
+
+Every commit message follows [Conventional Commits 1.0.0](https://www.conventionalcommits.org):
+
+```
+<type>(<scope>): <description>
+
+[optional body]
+
+[optional footer]
+```
+
+**Types**
+
+| Type | Use for | SemVer effect |
+|---|---|---|
+| `feat` | A new user-facing capability | MINOR |
+| `fix` | A bug fix | PATCH |
+| `perf` | A performance improvement | PATCH |
+| `refactor` | Restructuring with no behaviour change | PATCH |
+| `test` | Adding or fixing tests only | none |
+| `docs` | Documentation only, including `AGENTS.md` files | none |
+| `build` | Gradle scripts, version catalog, dependencies, toolchain | none |
+| `ci` | CI pipeline configuration | none |
+| `style` | Formatting only, no code change | none |
+| `chore` | Housekeeping that fits nothing above | none |
+
+**Scopes** — the module the change belongs to, dropping the leading `:` and the `feature:` prefix:
+
+`app`, `designsystem`, `domain`, `data`, `llm`, `welcome`, `llmsetup`, `home`, `quiz`, `results`, `settings`
+
+Omit the scope when the change spans the whole repository, such as a version catalog bump.
+
+**Rules**
+
+- Description in English, imperative mood, lowercase, no trailing period: `add api key field`, not `Added API key field.`
+- Subject line of 72 characters or fewer
+- The body explains **why** the change was made, not what the diff already shows; wrap it at 72 columns
+- A breaking change is marked with `!` after the scope **and** a `BREAKING CHANGE:` footer describing the migration
+- One logical change per commit — never mix a feature with an unrelated refactor
+- Tests written alongside a feature belong in that feature's commit; a standalone `test:` commit is only for tests added to pre-existing code
+- Split large work into a sequence of commits ordered by dependency: build setup, then `:core:domain`, `:core:data`, `:designsystem`, the features, and finally `:app`
+
+**Examples**
+
+```
+feat(llmsetup): add llm selection with byok api key entry
+fix(data): fall back to defaults when the datastore read fails
+build: enforce detekt and 80% kover branch coverage
+docs(designsystem): document the 4.dp dimension grid
+
+feat(data)!: rename the selected provider preference key
+
+BREAKING CHANGE: stored provider selections are dropped and users fall
+back to the default provider on first launch after upgrading.
+```
+
+---
+
 ## LLM Providers
 
 The active provider is resolved by Koin using the user-selected `LlmProviderType` stored in DataStore.
