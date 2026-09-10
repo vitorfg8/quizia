@@ -12,10 +12,14 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.EmojiObjects
+import androidx.compose.material.icons.rounded.Forest
+import androidx.compose.material.icons.rounded.Memory
 import androidx.compose.material.icons.rounded.Movie
 import androidx.compose.material.icons.rounded.MusicNote
+import androidx.compose.material.icons.rounded.Newspaper
 import androidx.compose.material.icons.rounded.Public
 import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.SportsEsports
 import androidx.compose.material.icons.rounded.SportsSoccer
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -135,6 +139,22 @@ private fun QuizCategory.toUiModel(): CategoryUiModel = when (this) {
     QuizCategory.ASTRONOMY -> CategoryUiModel(
         icon = Icons.Rounded.AutoAwesome,
         labelResId = R.string.category_astronomy,
+    )
+    QuizCategory.NATURE -> CategoryUiModel(
+        icon = Icons.Rounded.Forest,
+        labelResId = R.string.category_nature,
+    )
+    QuizCategory.TECHNOLOGY -> CategoryUiModel(
+        icon = Icons.Rounded.Memory,
+        labelResId = R.string.category_technology,
+    )
+    QuizCategory.GAMES -> CategoryUiModel(
+        icon = Icons.Rounded.SportsEsports,
+        labelResId = R.string.category_games,
+    )
+    QuizCategory.CURRENT_EVENTS -> CategoryUiModel(
+        icon = Icons.Rounded.Newspaper,
+        labelResId = R.string.category_current_events,
     )
 }
 

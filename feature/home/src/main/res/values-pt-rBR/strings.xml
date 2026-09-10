@@ -9,4 +9,8 @@
     <string name="category_movies_tv">Filmes e Séries</string>
     <string name="category_sports">Esportes</string>
     <string name="category_astronomy">Astronomia</string>
+    <string name="category_nature">Natureza</string>
+    <string name="category_technology">Tecnologia</string>
+    <string name="category_games">Games</string>
+    <string name="category_current_events">Atualidades</string>
 </resources>
