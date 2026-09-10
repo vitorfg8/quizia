@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="llm_setup_title">Escolha sua IA</string>
+    <string name="llm_setup_subtitle">Selecione o modelo de linguagem que irá gerar seus quizzes.</string>
+    <string name="llm_setup_api_key_label">Chave de API</string>
+    <string name="llm_setup_api_key_placeholder">Cole sua chave de API aqui</string>
+    <string name="llm_setup_action_continue">Continuar</string>
+
+    <string name="llm_provider_gemini_nano">Gemini Nano (no dispositivo)</string>
+    <string name="llm_provider_gemini_api">Gemini API</string>
+    <string name="llm_provider_openai">OpenAI</string>
+    <string name="llm_provider_claude">Claude</string>
+</resources>
