@@ -8,7 +8,7 @@ An AI-powered quiz app for Android. Questions are generated on demand by a large
 
 ## Features
 
-- Choose a topic (General Knowledge, History & Geography, International Music, Movies & TV, Sports, Astronomy)
+- Choose a topic (General Knowledge, History & Geography, International Music, Movies & TV, Sports, Astronomy, Nature, Technology, Games, Current Events)
 - Questions generated live by the selected LLM — no pre-built question bank
 - Star rating on the results screen based on your score
 - Light and dark theme support

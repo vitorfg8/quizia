@@ -97,6 +97,10 @@ enum class QuizCategory {
     MOVIES_AND_TV,
     SPORTS,
     ASTRONOMY,
+    NATURE,
+    TECHNOLOGY,
+    GAMES,
+    CURRENT_EVENTS,
 }
 ```
 
