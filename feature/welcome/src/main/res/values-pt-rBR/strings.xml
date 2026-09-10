@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="welcome_title">Quizia</string>
-    <string name="welcome_tagline">Quizzes com IA, a qualquer hora.</string>
-    <string name="welcome_action_continue">Continuar</string>
+    <string name="welcome_tagline">Um quiz inteligente, alimentado por IA.</string>
+    <string name="welcome_action_continue">Começar</string>
+    <string name="welcome_benefit_questions_title">Perguntas personalizadas</string>
+    <string name="welcome_benefit_questions_subtitle">Geradas por IA, do seu jeito.</string>
+    <string name="welcome_benefit_practice_title">Aprendizado na prática</string>
+    <string name="welcome_benefit_practice_subtitle">Desperte seu conhecimento.</string>
+    <string name="welcome_benefit_pace_title">Do seu jeito e ritmo</string>
+    <string name="welcome_benefit_pace_subtitle">Escolha o tema.</string>
 </resources>

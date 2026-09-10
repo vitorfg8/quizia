@@ -47,7 +47,7 @@ fun QuiziaStarRating(
                 } else {
                     QuiziaTheme.colorScheme.surfaceVariant
                 },
-                modifier = Modifier.size(QuiziaTheme.sizes.starLarge),
+                modifier = Modifier.size(QuiziaTheme.sizes.starMedium),
             )
         }
     }

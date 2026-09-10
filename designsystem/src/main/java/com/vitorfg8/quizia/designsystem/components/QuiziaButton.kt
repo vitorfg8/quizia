@@ -28,7 +28,12 @@ fun QuiziaButton(
             disabledContainerColor = QuiziaTheme.colorScheme.surfaceVariant,
             disabledContentColor = QuiziaTheme.colorScheme.onSurfaceVariant,
         ),
-        shape = QuiziaTheme.shapes.large,
+        elevation = ButtonDefaults.buttonElevation(
+            defaultElevation = QuiziaTheme.sizes.elevationNone,
+            pressedElevation = QuiziaTheme.sizes.elevationNone,
+            disabledElevation = QuiziaTheme.sizes.elevationNone,
+        ),
+        shape = QuiziaTheme.shapes.extraLarge,
     ) {
         Text(
             text = text,

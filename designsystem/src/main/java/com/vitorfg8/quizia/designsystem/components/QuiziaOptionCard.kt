@@ -7,18 +7,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Check
-import androidx.compose.material.icons.rounded.Close
-import androidx.compose.material3.Icon
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import com.vitorfg8.quizia.designsystem.QuiziaTheme
 
@@ -38,53 +34,54 @@ fun QuiziaOptionCard(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
 ) {
+    val contentColor = state.toContentColor()
     Surface(
         onClick = onClick,
         modifier = modifier.defaultMinSize(minHeight = QuiziaTheme.sizes.optionCardMinHeight),
         enabled = enabled,
         shape = QuiziaTheme.shapes.large,
         color = state.toContainerColor(),
-        contentColor = state.toContentColor(),
+        contentColor = contentColor,
+        tonalElevation = QuiziaTheme.sizes.elevationNone,
+        shadowElevation = QuiziaTheme.sizes.elevationNone,
     ) {
         Row(
             modifier = Modifier.padding(QuiziaTheme.spacing.medium),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(QuiziaTheme.spacing.medium),
+            horizontalArrangement = Arrangement.spacedBy(QuiziaTheme.spacing.small),
         ) {
+            RadioButton(
+                selected = state != OptionCardState.Default,
+                onClick = null,
+                enabled = enabled,
+                colors = RadioButtonDefaults.colors(
+                    selectedColor = contentColor,
+                    unselectedColor = QuiziaTheme.colorScheme.onSurfaceVariant,
+                    disabledSelectedColor = contentColor,
+                    disabledUnselectedColor = QuiziaTheme.colorScheme.onSurfaceVariant,
+                ),
+            )
             Text(
                 text = text,
                 style = QuiziaTheme.typography.bodyLarge,
                 modifier = Modifier.weight(1f),
             )
-            state.toTrailingIcon()?.let { icon ->
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    modifier = Modifier.size(QuiziaTheme.sizes.iconMedium),
-                )
-            }
         }
     }
 }
 
 @Composable
 private fun OptionCardState.toContainerColor(): Color = when (this) {
-    OptionCardState.Default -> QuiziaTheme.colorScheme.surfaceVariant
+    OptionCardState.Default -> QuiziaTheme.colorScheme.surface
     OptionCardState.Correct -> QuiziaTheme.extendedColors.correctAnswer
     OptionCardState.Wrong -> QuiziaTheme.extendedColors.wrongAnswer
 }
 
 @Composable
 private fun OptionCardState.toContentColor(): Color = when (this) {
-    OptionCardState.Default -> QuiziaTheme.colorScheme.onSurfaceVariant
+    OptionCardState.Default -> QuiziaTheme.colorScheme.onSurface
     OptionCardState.Correct -> QuiziaTheme.extendedColors.onCorrectAnswer
     OptionCardState.Wrong -> QuiziaTheme.extendedColors.onWrongAnswer
-}
-
-private fun OptionCardState.toTrailingIcon(): ImageVector? = when (this) {
-    OptionCardState.Default -> null
-    OptionCardState.Correct -> Icons.Rounded.Check
-    OptionCardState.Wrong -> Icons.Rounded.Close
 }
 
 @Preview(name = "Light", showBackground = true)

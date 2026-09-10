@@ -34,7 +34,7 @@ fun QuiziaSettingsGroup(
         Surface(
             modifier = Modifier.fillMaxWidth(),
             shape = QuiziaTheme.shapes.large,
-            color = QuiziaTheme.colorScheme.surfaceContainerLow,
+            color = QuiziaTheme.colorScheme.surface,
             tonalElevation = QuiziaTheme.sizes.elevationNone,
         ) {
             Column(

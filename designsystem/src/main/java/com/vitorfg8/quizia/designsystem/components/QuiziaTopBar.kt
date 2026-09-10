@@ -31,7 +31,7 @@ fun QuiziaTopBar(
         actions = actions,
         modifier = modifier,
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = QuiziaTheme.colorScheme.surface,
+            containerColor = QuiziaTheme.colorScheme.background,
             actionIconContentColor = QuiziaTheme.colorScheme.onSurfaceVariant,
         ),
     )

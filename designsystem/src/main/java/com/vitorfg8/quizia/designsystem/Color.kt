@@ -8,27 +8,22 @@ import androidx.compose.ui.graphics.Color
 
 // ── Brand palette ────────────────────────────────────────────────────────────
 
-private val Blue600 = Color(0xFF1A56DB)
-private val Blue100 = Color(0xFFDBEAFE)
-private val Blue900 = Color(0xFF1E3A8A)
-private val Blue400 = Color(0xFF60A5FA)
-private val Blue200 = Color(0xFFBFDBFE)
-private val Blue700 = Color(0xFF1D4ED8)
+private val Lilac600 = Color(0xFF6B5CFF)
+private val Lilac100 = Color(0xFFE8E6FF)
+private val Lilac900 = Color(0xFF2A2270)
+private val Lilac400 = Color(0xFF9B8FFF)
+private val Lilac200 = Color(0xFFD4D0FF)
+private val Lilac700 = Color(0xFF4A3FD4)
 
-private val Violet600 = Color(0xFF7C3AED)
-private val Violet100 = Color(0xFFEDE9FE)
-private val Violet900 = Color(0xFF4C1D95)
-private val Violet400 = Color(0xFFA78BFA)
-private val Violet700 = Color(0xFF5B21B6)
-
-private val NeutralWhite = Color(0xFFF9FAFB)
-private val Neutral900 = Color(0xFF111827)
-private val Neutral800 = Color(0xFF1F2937)
-private val Neutral700 = Color(0xFF374151)
-private val Neutral500 = Color(0xFF6B7280)
-private val Neutral400 = Color(0xFF9CA3AF)
-private val Neutral300 = Color(0xFFD1D5DB)
-private val Neutral200 = Color(0xFFF3F4F6)
+private val CanvasLight = Color(0xFFF6F7FB)
+private val CanvasDark = Color(0xFF12121A)
+private val SurfaceDark = Color(0xFF1C1C26)
+private val Ink900 = Color(0xFF111827)
+private val Ink700 = Color(0xFF374151)
+private val Ink500 = Color(0xFF6B7280)
+private val Ink400 = Color(0xFF9CA3AF)
+private val LineLight = Color(0xFFE2E4EA)
+private val WashLight = Color(0xFFEEF0F6)
 
 private val Red600 = Color(0xFFDC2626)
 private val Red400 = Color(0xFFF87171)
@@ -37,41 +32,45 @@ private val Red900 = Color(0xFF7F1D1D)
 // ── Material3 color schemes ───────────────────────────────────────────────────
 
 internal val LightColorScheme = lightColorScheme(
-    primary = Blue600,
+    primary = Lilac600,
     onPrimary = Color.White,
-    primaryContainer = Blue100,
-    onPrimaryContainer = Blue900,
-    secondary = Violet600,
+    primaryContainer = Lilac100,
+    onPrimaryContainer = Lilac900,
+    secondary = Lilac600,
     onSecondary = Color.White,
-    secondaryContainer = Violet100,
-    onSecondaryContainer = Violet900,
-    background = NeutralWhite,
-    onBackground = Neutral900,
+    secondaryContainer = Lilac100,
+    onSecondaryContainer = Lilac900,
+    background = CanvasLight,
+    onBackground = Ink900,
     surface = Color.White,
-    onSurface = Neutral900,
-    surfaceVariant = Neutral200,
-    onSurfaceVariant = Neutral500,
-    outline = Neutral300,
+    onSurface = Ink900,
+    surfaceVariant = WashLight,
+    onSurfaceVariant = Ink500,
+    surfaceContainerLow = Color.White,
+    outline = LineLight,
+    outlineVariant = LineLight,
     error = Red600,
     onError = Color.White,
 )
 
 internal val DarkColorScheme = darkColorScheme(
-    primary = Blue400,
-    onPrimary = Blue900,
-    primaryContainer = Blue700,
-    onPrimaryContainer = Blue200,
-    secondary = Violet400,
-    onSecondary = Violet900,
-    secondaryContainer = Violet700,
-    onSecondaryContainer = Violet100,
-    background = Neutral900,
-    onBackground = NeutralWhite,
-    surface = Neutral800,
-    onSurface = NeutralWhite,
-    surfaceVariant = Neutral700,
-    onSurfaceVariant = Neutral400,
-    outline = Neutral500,
+    primary = Lilac400,
+    onPrimary = Lilac900,
+    primaryContainer = Lilac700,
+    onPrimaryContainer = Lilac200,
+    secondary = Lilac400,
+    onSecondary = Lilac900,
+    secondaryContainer = Lilac700,
+    onSecondaryContainer = Lilac100,
+    background = CanvasDark,
+    onBackground = CanvasLight,
+    surface = SurfaceDark,
+    onSurface = CanvasLight,
+    surfaceVariant = Ink700,
+    onSurfaceVariant = Ink400,
+    surfaceContainerLow = SurfaceDark,
+    outline = Ink500,
+    outlineVariant = Ink700,
     error = Red400,
     onError = Red900,
 )

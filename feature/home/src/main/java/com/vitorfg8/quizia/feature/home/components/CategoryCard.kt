@@ -35,7 +35,7 @@ fun CategoryCard(
         modifier = modifier.aspectRatio(1f),
         shape = QuiziaTheme.shapes.large,
         colors = CardDefaults.cardColors(
-            containerColor = QuiziaTheme.colorScheme.surfaceVariant,
+containerColor = QuiziaTheme.colorScheme.surface,
             contentColor = QuiziaTheme.colorScheme.onSurface,
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = QuiziaTheme.sizes.elevationNone),

@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="results_title">Seu resultado</string>
-    <string name="results_score">%1$d de %2$d corretas</string>
+    <string name="results_title">Quiz concluído!</string>
+    <string name="results_score">%1$d/%2$d</string>
+    <string name="results_score_label">acertos</string>
     <string name="results_stars_content_description">%1$d de %2$d estrelas</string>
-    <string name="results_back_to_home">Voltar ao início</string>
+    <string name="results_back_to_home">Fazer outro</string>
 
     <string name="results_message_zero_stars">Não foi dessa vez. Todo especialista começou do zero.</string>
     <string name="results_message_one_star">Já é um começo. Tente mais uma rodada.</string>
     <string name="results_message_two_stars">Você está chegando lá. Continue.</string>
     <string name="results_message_three_stars">Bom trabalho. Você manja do assunto.</string>
     <string name="results_message_four_stars">Impressionante. Quase perfeito.</string>
-    <string name="results_message_five_stars">Nota máxima. Nada passou por você.</string>
+    <string name="results_message_five_stars">Você mandou bem!</string>
 </resources>

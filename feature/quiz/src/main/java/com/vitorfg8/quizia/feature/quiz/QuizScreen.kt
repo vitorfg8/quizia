@@ -4,6 +4,7 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,6 +19,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -28,7 +31,6 @@ import com.vitorfg8.quizia.designsystem.components.OptionCardState
 import com.vitorfg8.quizia.designsystem.components.QuiziaButton
 import com.vitorfg8.quizia.designsystem.components.QuiziaOptionCard
 import com.vitorfg8.quizia.designsystem.components.QuiziaProgressBar
-import com.vitorfg8.quizia.designsystem.components.QuiziaTopBar
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -49,6 +51,7 @@ fun QuizRoute(
     }
     QuizScreen(
         uiState = uiState,
+        category = category,
         onOptionClick = viewModel::selectOption,
         onNextClick = viewModel::goToNextQuestion,
         onRetryClick = viewModel::loadQuiz,
@@ -59,6 +62,7 @@ fun QuizRoute(
 @Composable
 internal fun QuizScreen(
     uiState: QuizUiState,
+    category: QuizCategory,
     onOptionClick: (Int) -> Unit,
     onNextClick: () -> Unit,
     onRetryClick: () -> Unit,
@@ -67,21 +71,12 @@ internal fun QuizScreen(
     Scaffold(
         modifier = modifier.fillMaxSize(),
         containerColor = QuiziaTheme.colorScheme.background,
-        topBar = {
-            QuiziaTopBar(
-                title = stringResource(
-                    id = R.string.quiz_title,
-                    uiState.currentQuestionIndex + 1,
-                    uiState.totalQuestions,
-                ),
-            )
-        },
     ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
-                .padding(QuiziaTheme.spacing.medium),
+                .padding(QuiziaTheme.spacing.large),
             verticalArrangement = Arrangement.spacedBy(QuiziaTheme.spacing.medium),
         ) {
             when {
@@ -92,6 +87,7 @@ internal fun QuizScreen(
                 )
                 uiState.question != null -> QuestionContent(
                     uiState = uiState,
+                    category = category,
                     question = uiState.question,
                     onOptionClick = onOptionClick,
                     onNextClick = onNextClick,
@@ -152,6 +148,7 @@ private fun ErrorContent(
 @Composable
 private fun QuestionContent(
     uiState: QuizUiState,
+    category: QuizCategory,
     question: Question,
     onOptionClick: (Int) -> Unit,
     onNextClick: () -> Unit,
@@ -161,11 +158,13 @@ private fun QuestionContent(
         modifier = modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(QuiziaTheme.spacing.medium),
+        verticalArrangement = Arrangement.spacedBy(QuiziaTheme.spacing.large),
     ) {
-        QuiziaProgressBar(
-            progress = uiState.progress,
-            modifier = Modifier.fillMaxWidth(),
+        QuizProgressHeader(uiState = uiState)
+        Text(
+            text = stringResource(id = category.labelResId()),
+            style = QuiziaTheme.typography.labelLarge,
+            color = QuiziaTheme.colorScheme.primary,
         )
         Text(
             text = question.text,
@@ -200,6 +199,52 @@ private fun QuestionContent(
     }
 }
 
+@Composable
+private fun QuizProgressHeader(
+    uiState: QuizUiState,
+    modifier: Modifier = Modifier,
+) {
+    val progressDescription = stringResource(
+        id = R.string.quiz_progress_content_description,
+        uiState.currentQuestionIndex + 1,
+        uiState.totalQuestions,
+    )
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .semantics { contentDescription = progressDescription },
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(QuiziaTheme.spacing.medium),
+    ) {
+        QuiziaProgressBar(
+            progress = uiState.progress,
+            modifier = Modifier.weight(1f),
+        )
+        Text(
+            text = stringResource(
+                id = R.string.quiz_title,
+                uiState.currentQuestionIndex + 1,
+                uiState.totalQuestions,
+            ),
+            style = QuiziaTheme.typography.labelLarge,
+            color = QuiziaTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+}
+
+private fun QuizCategory.labelResId(): Int = when (this) {
+    QuizCategory.GENERAL_KNOWLEDGE -> R.string.category_general_knowledge
+    QuizCategory.HISTORY_AND_GEOGRAPHY -> R.string.category_history_geography
+    QuizCategory.INTERNATIONAL_MUSIC -> R.string.category_international_music
+    QuizCategory.MOVIES_AND_TV -> R.string.category_movies_tv
+    QuizCategory.SPORTS -> R.string.category_sports
+    QuizCategory.ASTRONOMY -> R.string.category_astronomy
+    QuizCategory.NATURE -> R.string.category_nature
+    QuizCategory.TECHNOLOGY -> R.string.category_technology
+    QuizCategory.GAMES -> R.string.category_games
+    QuizCategory.CURRENT_EVENTS -> R.string.category_current_events
+}
+
 private fun QuizUiState.resolveOptionState(optionIndex: Int): OptionCardState = when {
     !answerRevealed -> OptionCardState.Default
     optionIndex == question?.correctIndex -> OptionCardState.Correct
@@ -214,6 +259,7 @@ private fun QuizScreenLoadingPreview() {
     QuiziaTheme {
         QuizScreen(
             uiState = QuizUiState(isLoading = true, totalQuestions = 5),
+            category = QuizCategory.TECHNOLOGY,
             onOptionClick = {},
             onNextClick = {},
             onRetryClick = {},
@@ -228,8 +274,8 @@ private fun QuizScreenRevealedPreview() {
     QuiziaTheme {
         QuizScreen(
             uiState = QuizUiState(
-                currentQuestionIndex = 1,
-                totalQuestions = 5,
+                currentQuestionIndex = 2,
+                totalQuestions = 8,
                 question = Question(
                     text = "Which planet is the largest in the Solar System?",
                     options = listOf("Mars", "Jupiter", "Venus", "Mercury"),
@@ -239,6 +285,7 @@ private fun QuizScreenRevealedPreview() {
                 answerRevealed = true,
                 correctAnswerText = "Jupiter",
             ),
+            category = QuizCategory.TECHNOLOGY,
             onOptionClick = {},
             onNextClick = {},
             onRetryClick = {},
@@ -253,6 +300,7 @@ private fun QuizScreenErrorPreview() {
     QuiziaTheme {
         QuizScreen(
             uiState = QuizUiState(errorMessageResId = R.string.quiz_error_missing_api_key),
+            category = QuizCategory.TECHNOLOGY,
             onOptionClick = {},
             onNextClick = {},
             onRetryClick = {},

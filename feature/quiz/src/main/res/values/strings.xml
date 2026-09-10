@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="quiz_title">Question %1$d of %2$d</string>
+    <string name="quiz_title">%1$d/%2$d</string>
     <string name="quiz_progress_content_description">Question %1$d of %2$d</string>
     <string name="quiz_loading">Writing your questions…</string>
-    <string name="quiz_next">Next question</string>
+    <string name="quiz_next">Next</string>
     <string name="quiz_see_results">See results</string>
     <string name="quiz_correct_answer">Correct answer: %1$s</string>
     <string name="quiz_retry">Try again</string>
@@ -11,4 +11,15 @@
     <string name="quiz_error_generic">The quiz could not be generated. Please try again.</string>
     <string name="quiz_error_missing_api_key">No API key is stored for the selected provider. Add one in the settings.</string>
     <string name="quiz_error_on_device_unavailable">The on-device model is not available. Pick another provider in the settings.</string>
+
+    <string name="category_general_knowledge">General Knowledge</string>
+    <string name="category_history_geography">History &amp; Geography</string>
+    <string name="category_international_music">International Music</string>
+    <string name="category_movies_tv">Movies &amp; TV</string>
+    <string name="category_sports">Sports</string>
+    <string name="category_astronomy">Astronomy</string>
+    <string name="category_nature">Nature</string>
+    <string name="category_technology">Technology</string>
+    <string name="category_games">Games</string>
+    <string name="category_current_events">Current Events</string>
 </resources>

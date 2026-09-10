@@ -85,15 +85,23 @@ internal fun LlmSetupScreen(
 
             Spacer(modifier = Modifier.padding(top = QuiziaTheme.spacing.large))
 
-            HorizontalDivider(color = QuiziaTheme.colorScheme.outline)
-
-            uiState.availableProviders.forEach { provider ->
-                LlmProviderRadioItem(
-                    label = stringResource(id = provider.labelResId()),
-                    selected = uiState.selectedProvider == provider,
-                    onClick = { onProviderSelected(provider) },
-                )
-                HorizontalDivider(color = QuiziaTheme.colorScheme.outline)
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = QuiziaTheme.shapes.large,
+                color = QuiziaTheme.colorScheme.surface,
+            ) {
+                Column {
+                    uiState.availableProviders.forEachIndexed { index, provider ->
+                        if (index > 0) {
+                            HorizontalDivider(color = QuiziaTheme.colorScheme.outlineVariant)
+                        }
+                        LlmProviderRadioItem(
+                            label = stringResource(id = provider.labelResId()),
+                            selected = uiState.selectedProvider == provider,
+                            onClick = { onProviderSelected(provider) },
+                        )
+                    }
+                }
             }
 
             AnimatedVisibility(visible = uiState.isApiKeyRequired) {
