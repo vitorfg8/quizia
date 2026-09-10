@@ -2,7 +2,9 @@ package com.vitorfg8.quizia.feature.llmsetup
 
 import com.vitorfg8.quizia.core.domain.model.LlmProviderType
 import com.vitorfg8.quizia.core.domain.repository.ApiKeyRepository
+import com.vitorfg8.quizia.core.domain.repository.OnDeviceModelRepository
 import com.vitorfg8.quizia.core.domain.repository.SettingsRepository
+import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import io.mockk.verify
@@ -130,11 +132,15 @@ class LlmSetupViewModelTest {
         coVerify(exactly = 0) { mockSettingsRepository.saveSelectedProvider(any()) }
     }
 
-    private fun createViewModel(isGeminiNanoSupported: Boolean = false) = LlmSetupViewModel(
-        settingsRepository = mockSettingsRepository,
-        apiKeyRepository = mockApiKeyRepository,
-        isGeminiNanoSupported = isGeminiNanoSupported,
-    )
+    private fun createViewModel(isGeminiNanoSupported: Boolean = false): LlmSetupViewModel {
+        val mockOnDeviceModelRepository = mockk<OnDeviceModelRepository>()
+        coEvery { mockOnDeviceModelRepository.isAvailable() } returns isGeminiNanoSupported
+        return LlmSetupViewModel(
+            settingsRepository = mockSettingsRepository,
+            apiKeyRepository = mockApiKeyRepository,
+            onDeviceModelRepository = mockOnDeviceModelRepository,
+        )
+    }
 
     private companion object {
         const val INPUT_API_KEY = "test-api-key"

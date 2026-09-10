@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vitorfg8.quizia.core.domain.model.LlmProviderType
 import com.vitorfg8.quizia.core.domain.repository.ApiKeyRepository
+import com.vitorfg8.quizia.core.domain.repository.OnDeviceModelRepository
 import com.vitorfg8.quizia.core.domain.repository.SettingsRepository
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -17,16 +18,20 @@ import kotlinx.coroutines.launch
 class LlmSetupViewModel(
     private val settingsRepository: SettingsRepository,
     private val apiKeyRepository: ApiKeyRepository,
-    private val isGeminiNanoSupported: Boolean,
+    private val onDeviceModelRepository: OnDeviceModelRepository,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(
-        LlmSetupUiState(availableProviders = buildProviderList(isGeminiNanoSupported)),
+        LlmSetupUiState(availableProviders = buildProviderList(isGeminiNanoSupported = false)),
     )
     val uiState: StateFlow<LlmSetupUiState> = _uiState.asStateFlow()
 
     private val _sideEffect = Channel<LlmSetupSideEffect>(Channel.BUFFERED)
     val sideEffect: Flow<LlmSetupSideEffect> = _sideEffect.receiveAsFlow()
+
+    init {
+        loadAvailableProviders()
+    }
 
     fun selectProvider(provider: LlmProviderType) {
         _uiState.update { state ->
@@ -58,6 +63,15 @@ class LlmSetupViewModel(
             settingsRepository.saveSelectedProvider(provider)
             settingsRepository.setFirstRunComplete()
             _sideEffect.send(LlmSetupSideEffect.NavigateToHome)
+        }
+    }
+
+    private fun loadAvailableProviders() {
+        viewModelScope.launch {
+            val isSupported = onDeviceModelRepository.isAvailable()
+            _uiState.update { state ->
+                state.copy(availableProviders = buildProviderList(isSupported))
+            }
         }
     }
 

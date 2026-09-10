@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId = "com.vitorfg8.quizia"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 37
         versionCode = 1
         versionName = "0.1.0"
@@ -43,9 +43,12 @@ dependencies {
     implementation(project(":designsystem"))
     implementation(project(":core:domain"))
     implementation(project(":core:data"))
+    implementation(project(":core:llm"))
     implementation(project(":feature:welcome"))
     implementation(project(":feature:llmsetup"))
     implementation(project(":feature:home"))
+    implementation(project(":feature:quiz"))
+    implementation(project(":feature:results"))
 
     // Compose
     implementation(platform(libs.androidx.compose.bom))

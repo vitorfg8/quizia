@@ -47,9 +47,12 @@ dependencies {
     kover(project(":designsystem"))
     kover(project(":core:domain"))
     kover(project(":core:data"))
+    kover(project(":core:llm"))
     kover(project(":feature:welcome"))
     kover(project(":feature:llmsetup"))
     kover(project(":feature:home"))
+    kover(project(":feature:quiz"))
+    kover(project(":feature:results"))
 }
 
 kover {
@@ -57,6 +60,12 @@ kover {
         total {
             html { onCheck = false }
             xml { onCheck = false }
+
+            log {
+                onCheck = false
+                header = "Branch coverage"
+                coverageUnits = kotlinx.kover.gradle.plugin.dsl.CoverageUnit.BRANCH
+            }
 
             verify {
                 rule("Minimum branch coverage") {
@@ -80,14 +89,20 @@ kover {
                     "*ScreenKt",
                     "*.MainActivity",
                     "*.QuiziaApplication",
+                    // Wraps the ML Kit GenAI runtime, which only exists on a device.
+                    "*.MlKitOnDeviceModelSession",
                 )
                 packages(
                     "com.vitorfg8.quizia.designsystem",
                     "com.vitorfg8.quizia.designsystem.components",
                     "com.vitorfg8.quizia.di",
                     "com.vitorfg8.quizia.core.data.di",
+                    "com.vitorfg8.quizia.core.llm.di",
+                    "com.vitorfg8.quizia.core.llm.network.dto",
                     "com.vitorfg8.quizia.feature.home.di",
                     "com.vitorfg8.quizia.feature.llmsetup.di",
+                    "com.vitorfg8.quizia.feature.quiz.di",
+                    "com.vitorfg8.quizia.feature.results.di",
                 )
                 annotatedBy("androidx.compose.runtime.Composable")
             }

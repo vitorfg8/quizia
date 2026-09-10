@@ -2,9 +2,12 @@ package com.vitorfg8.quizia
 
 import android.app.Application
 import com.vitorfg8.quizia.core.data.di.dataModule
+import com.vitorfg8.quizia.core.llm.di.llmModule
 import com.vitorfg8.quizia.di.appModule
 import com.vitorfg8.quizia.feature.home.di.homeModule
 import com.vitorfg8.quizia.feature.llmsetup.di.llmSetupModule
+import com.vitorfg8.quizia.feature.quiz.di.quizModule
+import com.vitorfg8.quizia.feature.results.di.resultsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -17,8 +20,11 @@ class QuiziaApplication : Application() {
             modules(
                 appModule,
                 dataModule,
+                llmModule,
                 llmSetupModule,
                 homeModule,
+                quizModule,
+                resultsModule,
             )
         }
     }

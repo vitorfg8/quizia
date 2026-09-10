@@ -28,7 +28,7 @@ okhttp = "5.5.0"
 gson = "2.14.0"
 
 # LLM
-generativeai = "0.9.0"
+mlkitGenaiPrompt = "1.0.0-beta4"
 
 # Coroutines
 coroutines = "1.11.0"
@@ -80,8 +80,9 @@ okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhtt
 okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
 
-# LLM — Gemini API
-generativeai = { group = "com.google.ai.client.generativeai", name = "generativeai", version.ref = "generativeai" }
+# LLM — on-device Gemini Nano through the AICore system service.
+# The cloud providers are plain REST calls so each user can bring their own key.
+mlkit-genai-prompt = { group = "com.google.mlkit", name = "genai-prompt", version.ref = "mlkitGenaiPrompt" }
 
 # Coroutines
 kotlinx-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
