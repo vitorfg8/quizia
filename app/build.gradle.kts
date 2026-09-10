@@ -39,6 +39,14 @@ android {
 }
 
 dependencies {
+    // Modules
+    implementation(project(":designsystem"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:data"))
+    implementation(project(":feature:welcome"))
+    implementation(project(":feature:llmsetup"))
+    implementation(project(":feature:home"))
+
     // Compose
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
@@ -51,6 +59,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+    implementation(libs.androidx.lifecycle.runtime.compose)
 
     // Navigation
     implementation(libs.androidx.navigation.compose)
