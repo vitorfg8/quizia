@@ -20,12 +20,12 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val viewModel: MainViewModel = koinViewModel()
-            val isFirstRun by viewModel.isFirstRun.collectAsStateWithLifecycle()
+            val startOnWelcome by viewModel.startOnWelcome.collectAsStateWithLifecycle()
             val theme by viewModel.theme.collectAsStateWithLifecycle()
 
             QuiziaTheme(darkTheme = theme.isDarkTheme()) {
-                if (isFirstRun != null) {
-                    AppNavGraph(isFirstRun = isFirstRun!!)
+                if (startOnWelcome != null) {
+                    AppNavGraph(startOnWelcome = startOnWelcome!!)
                 }
             }
         }

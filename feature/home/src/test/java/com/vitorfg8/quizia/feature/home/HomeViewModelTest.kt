@@ -1,6 +1,9 @@
 package com.vitorfg8.quizia.feature.home
 
 import com.vitorfg8.quizia.core.domain.model.QuizCategory
+import com.vitorfg8.quizia.core.domain.usecase.HasAvailableLlmProviderUseCase
+import io.mockk.coEvery
+import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -16,12 +19,14 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 class HomeViewModelTest {
 
+    private val mockHasAvailableLlmProvider = mockk<HasAvailableLlmProviderUseCase>()
     private lateinit var viewModel: HomeViewModel
 
     @Before
     fun setUp() {
         Dispatchers.setMain(UnconfinedTestDispatcher())
-        viewModel = HomeViewModel()
+        coEvery { mockHasAvailableLlmProvider() } returns true
+        viewModel = HomeViewModel(hasAvailableLlmProvider = mockHasAvailableLlmProvider)
     }
 
     @After
@@ -49,5 +54,13 @@ class HomeViewModelTest {
         viewModel.onSettingsClick()
         val actual = viewModel.sideEffect.first()
         assertEquals(HomeSideEffect.NavigateToSettings, actual)
+    }
+
+    @Test
+    fun `a missing provider sends the user back to welcome`() = runTest {
+        coEvery { mockHasAvailableLlmProvider() } returns false
+        viewModel.ensureProviderAvailable()
+        val actual = viewModel.sideEffect.first()
+        assertEquals(HomeSideEffect.NavigateToWelcome, actual)
     }
 }

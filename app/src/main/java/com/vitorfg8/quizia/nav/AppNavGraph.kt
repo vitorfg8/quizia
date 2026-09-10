@@ -17,11 +17,11 @@ import com.vitorfg8.quizia.feature.welcome.WelcomeScreen
 
 @Composable
 internal fun AppNavGraph(
-    isFirstRun: Boolean,
+    startOnWelcome: Boolean,
     modifier: Modifier = Modifier,
 ) {
     val navController = rememberNavController()
-    val startDestination = if (isFirstRun) AppRoute.WELCOME else AppRoute.HOME
+    val startDestination = if (startOnWelcome) AppRoute.WELCOME else AppRoute.HOME
 
     NavHost(
         navController = navController,
@@ -50,6 +50,11 @@ internal fun AppNavGraph(
                     navController.navigate(AppRoute.buildQuizRoute(category.name))
                 },
                 onSettingsClick = { navController.navigate(AppRoute.SETTINGS) },
+                onMissingProvider = {
+                    navController.navigate(AppRoute.WELCOME) {
+                        popUpTo(AppRoute.HOME) { inclusive = true }
+                    }
+                },
             )
         }
 

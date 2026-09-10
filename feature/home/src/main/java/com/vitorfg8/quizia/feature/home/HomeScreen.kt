@@ -32,7 +32,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import com.vitorfg8.quizia.core.domain.model.QuizCategory
 import com.vitorfg8.quizia.designsystem.QuiziaTheme
 import com.vitorfg8.quizia.designsystem.components.QuiziaTopBar
@@ -43,15 +46,23 @@ import org.koin.androidx.compose.koinViewModel
 fun HomeRoute(
     onCategoryClick: (QuizCategory) -> Unit,
     onSettingsClick: () -> Unit,
+    onMissingProvider: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val lifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(lifecycleOwner) {
+        lifecycleOwner.lifecycle.repeatOnLifecycle(Lifecycle.State.RESUMED) {
+            viewModel.ensureProviderAvailable()
+        }
+    }
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { effect ->
             when (effect) {
                 is HomeSideEffect.NavigateToQuiz -> onCategoryClick(effect.category)
                 HomeSideEffect.NavigateToSettings -> onSettingsClick()
+                HomeSideEffect.NavigateToWelcome -> onMissingProvider()
             }
         }
     }
