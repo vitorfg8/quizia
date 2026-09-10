@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="settings_title">Configurações</string>
+    <string name="settings_back_content_description">Voltar</string>
+    <string name="settings_section_provider">Modelo de linguagem</string>
+    <string name="settings_section_api_key">Chave de API</string>
+    <string name="settings_section_theme">Tema</string>
+    <string name="settings_section_questions">Perguntas por quiz</string>
+    <string name="settings_api_key_label">Chave de API</string>
+    <string name="settings_api_key_placeholder">Cole uma nova chave de API</string>
+    <string name="settings_api_key_change">Trocar chave</string>
+    <string name="settings_api_key_delete">Apagar chave</string>
+    <string name="settings_api_key_save">Salvar chave</string>
+    <string name="settings_delete_key_title">Apagar chave de API?</string>
+    <string name="settings_delete_key_message">A chave salva será removida deste dispositivo. Você pode adicionar outra depois.</string>
+    <string name="settings_delete_key_confirm">Apagar</string>
+    <string name="settings_cancel">Cancelar</string>
+    <string name="settings_theme_light">Claro</string>
+    <string name="settings_theme_dark">Escuro</string>
+    <string name="settings_theme_system">Sistema</string>
+    <string name="settings_question_count_5">5</string>
+    <string name="settings_question_count_10">10</string>
+    <string name="settings_question_count_15">15</string>
+    <string name="llm_provider_gemini_nano">Gemini Nano (no dispositivo)</string>
+    <string name="llm_provider_gemini_api">Gemini API</string>
+    <string name="llm_provider_openai">OpenAI</string>
+    <string name="llm_provider_claude">Claude</string>
+</resources>
