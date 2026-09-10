@@ -1,0 +1,70 @@
+build:
+  maxIssues: 0
+
+config:
+  validation: true
+  warningsAsErrors: false
+
+complexity:
+  LongMethod:
+    active: true
+    threshold: 60
+    ignoreAnnotated: [ 'Composable' ]
+  LongParameterList:
+    active: true
+    functionThreshold: 7
+    constructorThreshold: 7
+    ignoreAnnotated: [ 'Composable' ]
+  TooManyFunctions:
+    active: true
+    thresholdInFiles: 15
+    thresholdInClasses: 15
+    thresholdInObjects: 15
+    ignoreAnnotatedFunctions: [ 'Composable', 'Preview' ]
+  CyclomaticComplexMethod:
+    active: true
+    threshold: 15
+    ignoreAnnotated: [ 'Composable' ]
+
+naming:
+  FunctionNaming:
+    active: true
+    functionPattern: '[a-z][a-zA-Z0-9]*'
+    ignoreAnnotated: [ 'Composable' ]
+  TopLevelPropertyNaming:
+    active: true
+    constantPattern: '[A-Z][_A-Z0-9]*'
+    propertyPattern: '[A-Za-z][_A-Za-z0-9]*'
+    privatePropertyPattern: '_?[A-Za-z][_A-Za-z0-9]*'
+  MatchingDeclarationName:
+    active: false
+
+style:
+  MagicNumber:
+    active: true
+    ignoreNumbers: [ '-1', '0', '1', '2' ]
+    ignoreAnnotated: [ 'Preview' ]
+    ignorePropertyDeclaration: true
+    ignoreCompanionObjectPropertyDeclaration: true
+  MaxLineLength:
+    active: true
+    maxLineLength: 120
+    excludes: [ '**/test/**', '**/androidTest/**' ]
+  UnusedPrivateMember:
+    active: true
+    ignoreAnnotated: [ 'Preview' ]
+  ReturnCount:
+    active: true
+    max: 3
+  ForbiddenComment:
+    active: false
+  UnusedImports:
+    active: true
+  WildcardImport:
+    active: true
+
+exceptions:
+  TooGenericExceptionCaught:
+    active: true
+  SwallowedException:
+    active: true
