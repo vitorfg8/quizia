@@ -11,18 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.AccountBalance
-import androidx.compose.material.icons.rounded.Code
-import androidx.compose.material.icons.rounded.Eco
-import androidx.compose.material.icons.rounded.EmojiObjects
-import androidx.compose.material.icons.rounded.Movie
-import androidx.compose.material.icons.rounded.MusicNote
-import androidx.compose.material.icons.rounded.Newspaper
-import androidx.compose.material.icons.rounded.Public
-import androidx.compose.material.icons.rounded.SportsEsports
-import androidx.compose.material.icons.rounded.SportsSoccer
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -43,6 +31,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.vitorfg8.quizia.core.domain.model.Question
 import com.vitorfg8.quizia.core.domain.model.QuizCategory
 import com.vitorfg8.quizia.designsystem.QuiziaTheme
+import com.vitorfg8.quizia.designsystem.icons.QuiziaIcons
 import com.vitorfg8.quizia.designsystem.components.OptionCardState
 import com.vitorfg8.quizia.designsystem.components.QuiziaAnswerFeedback
 import com.vitorfg8.quizia.designsystem.components.QuiziaButton
@@ -282,7 +271,7 @@ private fun QuizProgressHeader(
 private fun QuizBackButton(onBackClick: () -> Unit) {
     IconButton(onClick = onBackClick) {
         Icon(
-            imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+            imageVector = QuiziaIcons.ArrowBack,
             contentDescription = stringResource(id = R.string.quiz_back_content_description),
             tint = QuiziaTheme.colorScheme.onSurface,
         )
@@ -290,16 +279,16 @@ private fun QuizBackButton(onBackClick: () -> Unit) {
 }
 
 private fun QuizCategory.toIcon(): ImageVector = when (this) {
-    QuizCategory.GENERAL_KNOWLEDGE -> Icons.Rounded.EmojiObjects
-    QuizCategory.HISTORY_AND_GEOGRAPHY -> Icons.Rounded.AccountBalance
-    QuizCategory.INTERNATIONAL_MUSIC -> Icons.Rounded.MusicNote
-    QuizCategory.MOVIES_AND_TV -> Icons.Rounded.Movie
-    QuizCategory.SPORTS -> Icons.Rounded.SportsSoccer
-    QuizCategory.ASTRONOMY -> Icons.Rounded.Public
-    QuizCategory.NATURE -> Icons.Rounded.Eco
-    QuizCategory.TECHNOLOGY -> Icons.Rounded.Code
-    QuizCategory.GAMES -> Icons.Rounded.SportsEsports
-    QuizCategory.CURRENT_EVENTS -> Icons.Rounded.Newspaper
+    QuizCategory.GENERAL_KNOWLEDGE -> QuiziaIcons.Lightbulb
+    QuizCategory.HISTORY_AND_GEOGRAPHY -> QuiziaIcons.Bank
+    QuizCategory.INTERNATIONAL_MUSIC -> QuiziaIcons.MusicNote
+    QuizCategory.MOVIES_AND_TV -> QuiziaIcons.FilmSlate
+    QuizCategory.SPORTS -> QuiziaIcons.SoccerBall
+    QuizCategory.ASTRONOMY -> QuiziaIcons.Planet
+    QuizCategory.NATURE -> QuiziaIcons.Leaf
+    QuizCategory.TECHNOLOGY -> QuiziaIcons.Code
+    QuizCategory.GAMES -> QuiziaIcons.GameController
+    QuizCategory.CURRENT_EVENTS -> QuiziaIcons.Newspaper
 }
 
 private fun QuizCategory.labelResId(): Int = when (this) {

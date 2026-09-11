@@ -12,13 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.rounded.AccessTime
-import androidx.compose.material.icons.rounded.Cancel
-import androidx.compose.material.icons.rounded.CheckCircle
-import androidx.compose.material.icons.rounded.Home
-import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -38,6 +31,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.vitorfg8.quizia.designsystem.QuiziaTheme
+import com.vitorfg8.quizia.designsystem.icons.QuiziaIcons
 import com.vitorfg8.quizia.designsystem.components.QuiziaButton
 import com.vitorfg8.quizia.designsystem.components.QuiziaOutlinedButton
 import com.vitorfg8.quizia.designsystem.components.QuiziaScoreIndicator
@@ -180,7 +174,7 @@ private fun ResultsBackButton(onBackClick: () -> Unit) {
     Row(modifier = Modifier.fillMaxWidth()) {
         IconButton(onClick = onBackClick) {
             Icon(
-                imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                imageVector = QuiziaIcons.ArrowBack,
                 contentDescription = stringResource(id = R.string.results_back_content_description),
                 tint = QuiziaTheme.colorScheme.onSurface,
             )
@@ -243,21 +237,21 @@ private fun ResultsStatsCard(
     ) {
         Column(modifier = Modifier.padding(QuiziaTheme.spacing.large)) {
             QuiziaStatRow(
-                icon = Icons.Rounded.CheckCircle,
+                icon = QuiziaIcons.CheckCircle,
                 label = stringResource(id = R.string.results_stat_correct),
                 value = uiState.score.toString(),
                 iconTint = QuiziaTheme.extendedColors.success,
             )
             ResultsStatsDivider()
             QuiziaStatRow(
-                icon = Icons.Rounded.Cancel,
+                icon = QuiziaIcons.Cancel,
                 label = stringResource(id = R.string.results_stat_wrong),
                 value = uiState.wrongCount.toString(),
                 iconTint = QuiziaTheme.extendedColors.error,
             )
             ResultsStatsDivider()
             QuiziaStatRow(
-                icon = Icons.Rounded.AccessTime,
+                icon = QuiziaIcons.AccessTime,
                 label = stringResource(id = R.string.results_stat_time),
                 value = formatElapsedDuration(uiState.elapsedMs),
                 iconTint = QuiziaTheme.colorScheme.primary,
@@ -288,13 +282,13 @@ private fun ResultsActions(
         QuiziaButton(
             text = stringResource(id = R.string.results_play_another),
             onClick = onPlayAnotherClick,
-            leadingIcon = Icons.Rounded.Refresh,
+            leadingIcon = QuiziaIcons.Refresh,
             modifier = Modifier.fillMaxWidth(),
         )
         QuiziaOutlinedButton(
             text = stringResource(id = R.string.results_back_to_home),
             onClick = onBackToHomeClick,
-            leadingIcon = Icons.Rounded.Home,
+            leadingIcon = QuiziaIcons.Home,
             modifier = Modifier.fillMaxWidth(),
         )
     }

@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.EmojiObjects
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -23,6 +21,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.vitorfg8.quizia.designsystem.QuiziaTheme
+import com.vitorfg8.quizia.designsystem.icons.QuiziaIcons
 
 /** Entry point to a quiz: a soft card with the category's own accent on the icon. */
 @Composable
@@ -73,7 +72,7 @@ fun CategoryCard(
 private fun CategoryCardPreview() {
     QuiziaTheme {
         CategoryCard(
-            icon = Icons.Rounded.EmojiObjects,
+            icon = QuiziaIcons.Lightbulb,
             label = "General Knowledge",
             iconTint = QuiziaTheme.extendedColors.categoryViolet,
             onClick = {},

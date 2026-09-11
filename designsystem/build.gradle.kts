@@ -27,7 +27,6 @@ dependencies {
     api(libs.androidx.compose.ui)
     api(libs.androidx.compose.ui.graphics)
     api(libs.androidx.compose.ui.tooling.preview)
-    api(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.compose.ui.text.google.fonts)
     debugImplementation(libs.androidx.compose.ui.tooling)
 }

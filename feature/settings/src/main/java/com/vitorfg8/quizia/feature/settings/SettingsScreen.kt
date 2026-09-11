@@ -9,12 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material.icons.automirrored.rounded.HelpOutline
-import androidx.compose.material.icons.rounded.AutoAwesome
-import androidx.compose.material.icons.rounded.Key
-import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -29,6 +23,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.vitorfg8.quizia.core.domain.model.AppTheme
 import com.vitorfg8.quizia.core.domain.model.LlmProviderType
 import com.vitorfg8.quizia.designsystem.QuiziaTheme
+import com.vitorfg8.quizia.designsystem.icons.QuiziaIcons
 import com.vitorfg8.quizia.designsystem.components.QuiziaAlertDialog
 import com.vitorfg8.quizia.designsystem.components.QuiziaButton
 import com.vitorfg8.quizia.designsystem.components.QuiziaChoiceChips
@@ -96,7 +91,7 @@ internal fun SettingsScreen(
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Icon(
-                            imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                            imageVector = QuiziaIcons.ArrowBack,
                             contentDescription = stringResource(
                                 id = R.string.settings_back_content_description,
                             ),
@@ -170,7 +165,7 @@ private fun ProviderSection(
     onProviderSelected: (LlmProviderType) -> Unit,
 ) {
     QuiziaSettingsSection(
-        icon = Icons.Rounded.AutoAwesome,
+        icon = QuiziaIcons.Sparkle,
         title = stringResource(id = R.string.settings_section_provider),
         description = stringResource(id = R.string.settings_section_provider_description),
     ) {
@@ -192,7 +187,7 @@ private fun ApiKeySection(
     onDeleteApiKeyClick: () -> Unit,
 ) {
     QuiziaSettingsSection(
-        icon = Icons.Rounded.Key,
+        icon = QuiziaIcons.Key,
         title = stringResource(id = R.string.settings_section_api_key),
         description = stringResource(id = R.string.settings_section_api_key_description),
     ) {
@@ -238,7 +233,7 @@ private fun QuestionCountSection(
     onQuestionCountSelected: (Int) -> Unit,
 ) {
     QuiziaSettingsSection(
-        icon = Icons.AutoMirrored.Rounded.HelpOutline,
+        icon = QuiziaIcons.HelpOutline,
         title = stringResource(id = R.string.settings_section_questions),
         description = stringResource(id = R.string.settings_section_questions_description),
     ) {
@@ -256,7 +251,7 @@ private fun ThemeSection(
     onThemeSelected: (AppTheme) -> Unit,
 ) {
     QuiziaSettingsSection(
-        icon = Icons.Rounded.Palette,
+        icon = QuiziaIcons.Palette,
         title = stringResource(id = R.string.settings_section_theme),
         description = stringResource(id = R.string.settings_section_theme_description),
     ) {

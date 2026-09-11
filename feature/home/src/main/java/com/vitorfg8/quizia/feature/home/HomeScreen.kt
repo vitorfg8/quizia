@@ -12,18 +12,6 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AccountBalance
-import androidx.compose.material.icons.rounded.Code
-import androidx.compose.material.icons.rounded.Eco
-import androidx.compose.material.icons.rounded.EmojiObjects
-import androidx.compose.material.icons.rounded.Movie
-import androidx.compose.material.icons.rounded.MusicNote
-import androidx.compose.material.icons.rounded.Newspaper
-import androidx.compose.material.icons.rounded.Public
-import androidx.compose.material.icons.rounded.Settings
-import androidx.compose.material.icons.rounded.SportsEsports
-import androidx.compose.material.icons.rounded.SportsSoccer
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -42,6 +30,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.vitorfg8.quizia.core.domain.model.QuizCategory
 import com.vitorfg8.quizia.designsystem.QuiziaTheme
+import com.vitorfg8.quizia.designsystem.icons.QuiziaIcons
 import com.vitorfg8.quizia.designsystem.components.QuiziaTopBar
 import com.vitorfg8.quizia.designsystem.components.QuiziaWordmark
 import com.vitorfg8.quizia.feature.home.components.CategoryCard
@@ -97,7 +86,7 @@ internal fun HomeScreen(
                 actions = {
                     IconButton(onClick = onSettingsClick) {
                         Icon(
-                            imageVector = Icons.Rounded.Settings,
+                            imageVector = QuiziaIcons.Settings,
                             contentDescription = stringResource(id = R.string.home_settings_content_description),
                             tint = QuiziaTheme.colorScheme.onSurfaceVariant,
                         )
@@ -188,52 +177,52 @@ private data class CategoryUiModel(
 
 private fun QuizCategory.toUiModel(): CategoryUiModel = when (this) {
     QuizCategory.GENERAL_KNOWLEDGE -> CategoryUiModel(
-        icon = Icons.Rounded.EmojiObjects,
+        icon = QuiziaIcons.Lightbulb,
         labelResId = R.string.category_general_knowledge,
         accent = CategoryAccent.Amber,
     )
     QuizCategory.HISTORY_AND_GEOGRAPHY -> CategoryUiModel(
-        icon = Icons.Rounded.AccountBalance,
+        icon = QuiziaIcons.Bank,
         labelResId = R.string.category_history_geography,
         accent = CategoryAccent.Violet,
     )
     QuizCategory.INTERNATIONAL_MUSIC -> CategoryUiModel(
-        icon = Icons.Rounded.MusicNote,
+        icon = QuiziaIcons.MusicNote,
         labelResId = R.string.category_international_music,
         accent = CategoryAccent.Rose,
     )
     QuizCategory.MOVIES_AND_TV -> CategoryUiModel(
-        icon = Icons.Rounded.Movie,
+        icon = QuiziaIcons.FilmSlate,
         labelResId = R.string.category_movies_tv,
         accent = CategoryAccent.Orchid,
     )
     QuizCategory.SPORTS -> CategoryUiModel(
-        icon = Icons.Rounded.SportsSoccer,
+        icon = QuiziaIcons.SoccerBall,
         labelResId = R.string.category_sports,
         accent = CategoryAccent.Orange,
     )
     QuizCategory.ASTRONOMY -> CategoryUiModel(
-        icon = Icons.Rounded.Public,
+        icon = QuiziaIcons.Planet,
         labelResId = R.string.category_astronomy,
         accent = CategoryAccent.Indigo,
     )
     QuizCategory.NATURE -> CategoryUiModel(
-        icon = Icons.Rounded.Eco,
+        icon = QuiziaIcons.Leaf,
         labelResId = R.string.category_nature,
         accent = CategoryAccent.Green,
     )
     QuizCategory.TECHNOLOGY -> CategoryUiModel(
-        icon = Icons.Rounded.Code,
+        icon = QuiziaIcons.Code,
         labelResId = R.string.category_technology,
         accent = CategoryAccent.Teal,
     )
     QuizCategory.GAMES -> CategoryUiModel(
-        icon = Icons.Rounded.SportsEsports,
+        icon = QuiziaIcons.GameController,
         labelResId = R.string.category_games,
         accent = CategoryAccent.Rose,
     )
     QuizCategory.CURRENT_EVENTS -> CategoryUiModel(
-        icon = Icons.Rounded.Newspaper,
+        icon = QuiziaIcons.Newspaper,
         labelResId = R.string.category_current_events,
         accent = CategoryAccent.Indigo,
     )

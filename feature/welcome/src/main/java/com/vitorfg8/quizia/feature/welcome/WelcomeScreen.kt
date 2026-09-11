@@ -12,10 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AutoAwesome
-import androidx.compose.material.icons.rounded.Lightbulb
-import androidx.compose.material.icons.rounded.Tune
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.vitorfg8.quizia.designsystem.QuiziaTheme
+import com.vitorfg8.quizia.designsystem.icons.QuiziaIcons
 import com.vitorfg8.quizia.designsystem.components.QuiziaAmbientBackground
 import com.vitorfg8.quizia.designsystem.components.QuiziaBrandMark
 import com.vitorfg8.quizia.designsystem.components.QuiziaButton
@@ -86,17 +83,17 @@ private fun WelcomeBenefits(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.spacedBy(QuiziaTheme.spacing.large),
     ) {
         WelcomeBenefit(
-            icon = Icons.Rounded.AutoAwesome,
+            icon = QuiziaIcons.Sparkle,
             titleResId = R.string.welcome_benefit_questions_title,
             subtitleResId = R.string.welcome_benefit_questions_subtitle,
         )
         WelcomeBenefit(
-            icon = Icons.Rounded.Lightbulb,
+            icon = QuiziaIcons.LightbulbFilament,
             titleResId = R.string.welcome_benefit_practice_title,
             subtitleResId = R.string.welcome_benefit_practice_subtitle,
         )
         WelcomeBenefit(
-            icon = Icons.Rounded.Tune,
+            icon = QuiziaIcons.Tune,
             titleResId = R.string.welcome_benefit_pace_title,
             subtitleResId = R.string.welcome_benefit_pace_subtitle,
         )
