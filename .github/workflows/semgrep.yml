@@ -1,0 +1,29 @@
+name: Semgrep
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  semgrep:
+    name: Scan
+    runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Scan
+        run: >
+          semgrep scan
+          --config p/kotlin
+          --config p/security-audit
+          --metrics off
+          --error
+          --severity ERROR
