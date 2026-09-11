@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="welcome_title">Quizia</string>
     <string name="welcome_tagline">Um quiz inteligente, alimentado por IA.</string>
     <string name="welcome_action_continue">Começar</string>
     <string name="welcome_benefit_questions_title">Perguntas personalizadas</string>
