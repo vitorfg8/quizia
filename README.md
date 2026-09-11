@@ -22,7 +22,7 @@ An AI-powered quiz app for Android. Questions are generated on demand by a large
 
 - Choose a topic (General Knowledge, History & Geography, International Music, Movies & TV, Sports, Astronomy, Nature, Technology, Games, Current Events)
 - Questions generated live by the selected LLM — no pre-built question bank
-- Star rating on the results screen based on your score
+- Results screen with score, time and a play-another shortcut
 - Light and dark theme support
 - English and Brazilian Portuguese (locale-driven)
 
