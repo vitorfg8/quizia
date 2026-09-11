@@ -24,6 +24,7 @@ private val InterFontFamily = FontFamily(
     Font(googleFont = InterFont, fontProvider = InterFontProvider, weight = FontWeight.Medium),
     Font(googleFont = InterFont, fontProvider = InterFontProvider, weight = FontWeight.SemiBold),
     Font(googleFont = InterFont, fontProvider = InterFontProvider, weight = FontWeight.Bold),
+    Font(googleFont = InterFont, fontProvider = InterFontProvider, weight = FontWeight.ExtraBold),
 )
 
 private val BaseTypography = Typography()

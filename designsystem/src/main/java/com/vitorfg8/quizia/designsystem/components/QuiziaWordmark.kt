@@ -8,6 +8,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import com.vitorfg8.quizia.designsystem.QuiziaTheme
@@ -21,12 +22,17 @@ fun QuiziaWordmark(
 ) {
     val lead = stringResource(id = R.string.brand_name_lead)
     val accent = stringResource(id = R.string.brand_name_accent)
+    val wordmarkWeight = FontWeight.ExtraBold
     Text(
         text = buildAnnotatedString {
-            withStyle(SpanStyle(color = QuiziaTheme.colorScheme.onBackground)) { append(lead) }
-            withStyle(SpanStyle(color = QuiziaTheme.colorScheme.primary)) { append(accent) }
+            withStyle(SpanStyle(color = QuiziaTheme.colorScheme.onBackground, fontWeight = wordmarkWeight)) {
+                append(lead)
+            }
+            withStyle(SpanStyle(color = QuiziaTheme.colorScheme.primary, fontWeight = wordmarkWeight)) {
+                append(accent)
+            }
         },
-        style = style,
+        style = style.copy(fontWeight = wordmarkWeight),
         modifier = modifier,
     )
 }
