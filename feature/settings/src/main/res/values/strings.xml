@@ -20,7 +20,9 @@
     <string name="settings_delete_key_confirm">Delete</string>
     <string name="settings_cancel">Cancel</string>
     <string name="settings_theme_light">Light</string>
+    <string name="settings_theme_light_description">Always use the light theme</string>
     <string name="settings_theme_dark">Dark</string>
+    <string name="settings_theme_dark_description">Always use the dark theme</string>
     <string name="settings_theme_system">System</string>
     <string name="settings_theme_system_description">Follows your device theme</string>
     <string name="settings_question_count_5">5</string>

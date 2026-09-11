@@ -20,7 +20,9 @@
     <string name="settings_delete_key_confirm">Apagar</string>
     <string name="settings_cancel">Cancelar</string>
     <string name="settings_theme_light">Clara</string>
+    <string name="settings_theme_light_description">Usa sempre o tema claro</string>
     <string name="settings_theme_dark">Escura</string>
+    <string name="settings_theme_dark_description">Usa sempre o tema escuro</string>
     <string name="settings_theme_system">Sistema</string>
     <string name="settings_theme_system_description">Segue o tema do seu aparelho</string>
     <string name="settings_question_count_5">5</string>

@@ -258,7 +258,7 @@ private fun ThemeSection(
         THEME_OPTIONS.forEach { theme ->
             QuiziaRadioOption(
                 label = stringResource(id = theme.labelResId()),
-                description = theme.descriptionResId()?.let { stringResource(id = it) },
+                description = stringResource(id = theme.descriptionResId()),
                 selected = theme == selectedTheme,
                 onClick = { onThemeSelected(theme) },
             )
@@ -286,9 +286,10 @@ private fun AppTheme.labelResId(): Int = when (this) {
     AppTheme.SYSTEM -> R.string.settings_theme_system
 }
 
-private fun AppTheme.descriptionResId(): Int? = when (this) {
+private fun AppTheme.descriptionResId(): Int = when (this) {
+    AppTheme.LIGHT -> R.string.settings_theme_light_description
+    AppTheme.DARK -> R.string.settings_theme_dark_description
     AppTheme.SYSTEM -> R.string.settings_theme_system_description
-    else -> null
 }
 
 @Preview(name = "Light", showBackground = true)
