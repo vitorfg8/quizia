@@ -106,12 +106,32 @@ fun QuiziaButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    leadingIcon: ImageVector? = null,
 )
 ```
 
 - Primary action button: a pill filled with `QuiziaTheme.extendedColors.brandGradient`
 - Falls back to a flat `surfaceVariant` fill when `enabled = false`
-- Used for "Continue", "Next", "Save", "Back to Home"
+- Optional `leadingIcon` for actions such as "Play another"
+- Used for "Continue", "Next", "Save", "Play another"
+
+---
+
+### QuiziaOutlinedButton
+
+```kotlin
+@Composable
+fun QuiziaOutlinedButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    leadingIcon: ImageVector? = null,
+)
+```
+
+- Secondary pill: purple outline, transparent fill
+- Used for "Back to home" under the primary results CTA
 
 ---
 
@@ -126,6 +146,7 @@ fun QuiziaWordmark(
 ```
 
 - Renders the brand name as a dark "Quiz" followed by a purple "ia"
+- Always uses Inter ExtraBold, regardless of the size passed in `style`
 - Used on the welcome screen and in the home top bar
 
 ---
@@ -170,11 +191,75 @@ fun QuiziaOptionCard(
 )
 ```
 
-- Background color driven by `state`:
-  - `Default` → `QuiziaTheme.colorScheme.surfaceVariant` (gray)
-  - `Correct` → green semantic color token
-  - `Wrong` → red semantic color token
+- Background and hairline driven by `state`. Every option has a radio on the left:
+  - `Default` → `surface` + outline, empty radio
+  - `Correct` → `extendedColors.successContainer`, filled check radio, trailing check
+  - `Wrong` → `extendedColors.errorContainer`, selected red radio, trailing close
 - `enabled = false` after an answer has been revealed (prevents re-selection)
+
+---
+
+### QuiziaCategoryChip
+
+```kotlin
+@Composable
+fun QuiziaCategoryChip(
+    icon: ImageVector,
+    label: String,
+    modifier: Modifier = Modifier,
+)
+```
+
+- Compact lavender pill with a Material icon and the category name
+- Used at the top of `QuizScreen`
+
+---
+
+### QuiziaAnswerFeedback
+
+```kotlin
+@Composable
+fun QuiziaAnswerFeedback(
+    isCorrect: Boolean,
+    title: String,
+    explanation: String,
+    modifier: Modifier = Modifier,
+)
+```
+
+- Success or error banner shown after the player picks an option
+- Title and explanation are passed in so the quiz module owns the copy
+
+---
+
+### QuiziaResultHero
+
+```kotlin
+@Composable
+fun QuiziaResultHero(
+    isSuccess: Boolean,
+    modifier: Modifier = Modifier,
+)
+```
+
+- Large Material `Check` or `Close` in a filled circle, with quiet decorative sparks
+
+---
+
+### QuiziaStatRow
+
+```kotlin
+@Composable
+fun QuiziaStatRow(
+    icon: ImageVector,
+    label: String,
+    value: String,
+    iconTint: Color,
+    modifier: Modifier = Modifier,
+)
+```
+
+- One line of the results stats card: icon and label on the left, value on the right
 
 ---
 
@@ -191,21 +276,6 @@ fun QuiziaProgressBar(
 
 - Linear progress indicator: `progress = current.toFloat() / total`
 - Displayed at the top of `QuizScreen`
-
----
-
-### QuiziaStarRating
-
-```kotlin
-@Composable
-fun QuiziaStarRating(
-    stars: Int,           // 0–5
-    modifier: Modifier = Modifier,
-)
-```
-
-- Renders 5 star icons; filled for `stars`, outlined for the rest
-- Uses icon tokens from `QuiziaIcons`
 
 ---
 

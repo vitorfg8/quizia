@@ -82,9 +82,16 @@ internal val DarkColorScheme = darkColorScheme(
 
 // ── Extended colors ───────────────────────────────────────────────────────────
 
+private val Green700 = Color(0xFF166534)
 private val Green600 = Color(0xFF16A34A)
 private val Green400 = Color(0xFF4ADE80)
 private val Green900 = Color(0xFF14532D)
+private val SuccessWashLight = Color(0xFFECFDF3)
+private val SuccessWashDark = Color(0xFF14241A)
+
+private val Red800 = Color(0xFF991B1B)
+private val ErrorWashLight = Color(0xFFFEF2F2)
+private val ErrorWashDark = Color(0xFF2A1416)
 
 private val Indigo600 = Color(0xFF4B6BF5)
 private val Indigo300 = Color(0xFF7C93FF)
@@ -104,10 +111,14 @@ private val AmbientDarkMid = Color(0xFF100F1C)
  */
 @Immutable
 data class QuiziaExtendedColors(
-    val correctAnswer: Color,
-    val onCorrectAnswer: Color,
-    val wrongAnswer: Color,
-    val onWrongAnswer: Color,
+    val success: Color,
+    val onSuccess: Color,
+    val successContainer: Color,
+    val onSuccessContainer: Color,
+    val error: Color,
+    val onError: Color,
+    val errorContainer: Color,
+    val onErrorContainer: Color,
     val brandGradient: List<Color>,
     val onBrandGradient: Color,
     val categoryViolet: Color,
@@ -119,10 +130,14 @@ data class QuiziaExtendedColors(
 )
 
 internal val LightExtendedColors = QuiziaExtendedColors(
-    correctAnswer = Green600,
-    onCorrectAnswer = Color.White,
-    wrongAnswer = Red600,
-    onWrongAnswer = Color.White,
+    success = Green600,
+    onSuccess = Color.White,
+    successContainer = SuccessWashLight,
+    onSuccessContainer = Green700,
+    error = Red600,
+    onError = Color.White,
+    errorContainer = ErrorWashLight,
+    onErrorContainer = Red800,
     brandGradient = listOf(Lilac500, Lilac700),
     onBrandGradient = Color.White,
     categoryViolet = Lilac600,
@@ -134,10 +149,14 @@ internal val LightExtendedColors = QuiziaExtendedColors(
 )
 
 internal val DarkExtendedColors = QuiziaExtendedColors(
-    correctAnswer = Green400,
-    onCorrectAnswer = Green900,
-    wrongAnswer = Red400,
-    onWrongAnswer = Red900,
+    success = Green400,
+    onSuccess = Green900,
+    successContainer = SuccessWashDark,
+    onSuccessContainer = Green400,
+    error = Red400,
+    onError = Red900,
+    errorContainer = ErrorWashDark,
+    onErrorContainer = Red400,
     brandGradient = listOf(Lilac400, Lilac700),
     onBrandGradient = Color.White,
     categoryViolet = Lilac300,
