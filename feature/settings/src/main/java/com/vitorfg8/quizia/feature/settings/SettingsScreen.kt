@@ -11,7 +11,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material.icons.automirrored.rounded.HelpOutline
+import androidx.compose.material.icons.rounded.AutoAwesome
+import androidx.compose.material.icons.rounded.Key
+import androidx.compose.material.icons.rounded.Palette
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -26,16 +29,18 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.vitorfg8.quizia.core.domain.model.AppTheme
 import com.vitorfg8.quizia.core.domain.model.LlmProviderType
 import com.vitorfg8.quizia.designsystem.QuiziaTheme
-import com.vitorfg8.quizia.designsystem.components.LlmProviderRadioItem
 import com.vitorfg8.quizia.designsystem.components.QuiziaAlertDialog
 import com.vitorfg8.quizia.designsystem.components.QuiziaButton
+import com.vitorfg8.quizia.designsystem.components.QuiziaChoiceChips
 import com.vitorfg8.quizia.designsystem.components.QuiziaPasswordTextField
-import com.vitorfg8.quizia.designsystem.components.QuiziaSegmentedControl
-import com.vitorfg8.quizia.designsystem.components.QuiziaSettingsGroup
+import com.vitorfg8.quizia.designsystem.components.QuiziaRadioOption
+import com.vitorfg8.quizia.designsystem.components.QuiziaSettingsSection
 import com.vitorfg8.quizia.designsystem.components.QuiziaTextButton
 import com.vitorfg8.quizia.designsystem.components.QuiziaTextField
 import com.vitorfg8.quizia.designsystem.components.QuiziaTopBar
 import org.koin.androidx.compose.koinViewModel
+
+private val THEME_OPTIONS = listOf(AppTheme.SYSTEM, AppTheme.LIGHT, AppTheme.DARK)
 
 @Composable
 fun SettingsRoute(
@@ -107,12 +112,12 @@ internal fun SettingsScreen(
                 .fillMaxSize()
                 .padding(innerPadding)
                 .verticalScroll(rememberScrollState())
-                .padding(horizontal = QuiziaTheme.spacing.medium)
+                .padding(horizontal = QuiziaTheme.spacing.large)
                 .padding(
                     top = QuiziaTheme.spacing.small,
                     bottom = QuiziaTheme.spacing.extraLarge,
                 ),
-            verticalArrangement = Arrangement.spacedBy(QuiziaTheme.spacing.large),
+            verticalArrangement = Arrangement.spacedBy(QuiziaTheme.spacing.extraLarge),
         ) {
             ProviderSection(
                 providers = uiState.availableProviders,
@@ -124,18 +129,25 @@ internal fun SettingsScreen(
                     uiState = uiState,
                     onDraftApiKeyChanged = onDraftApiKeyChanged,
                     onChangeApiKeyClick = onChangeApiKeyClick,
-                    onSaveApiKeyClick = onSaveApiKeyClick,
                     onDeleteApiKeyClick = onDeleteApiKeyClick,
                 )
             }
-            ThemeSection(
-                selectedTheme = uiState.theme,
-                onThemeSelected = onThemeSelected,
-            )
             QuestionCountSection(
                 selectedCount = uiState.questionCount,
                 onQuestionCountSelected = onQuestionCountSelected,
             )
+            ThemeSection(
+                selectedTheme = uiState.theme,
+                onThemeSelected = onThemeSelected,
+            )
+            if (uiState.isApiKeyRequired && uiState.isEditingApiKey) {
+                QuiziaButton(
+                    text = stringResource(id = R.string.settings_save),
+                    onClick = onSaveApiKeyClick,
+                    enabled = uiState.canSaveApiKey,
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
         }
     }
     if (uiState.isDeleteKeyDialogVisible) {
@@ -157,12 +169,13 @@ private fun ProviderSection(
     selectedProvider: LlmProviderType,
     onProviderSelected: (LlmProviderType) -> Unit,
 ) {
-    QuiziaSettingsGroup(title = stringResource(id = R.string.settings_section_provider)) {
-        providers.forEachIndexed { index, provider ->
-            if (index > 0) {
-                HorizontalDivider(color = QuiziaTheme.colorScheme.outlineVariant)
-            }
-            LlmProviderRadioItem(
+    QuiziaSettingsSection(
+        icon = Icons.Rounded.AutoAwesome,
+        title = stringResource(id = R.string.settings_section_provider),
+        description = stringResource(id = R.string.settings_section_provider_description),
+    ) {
+        providers.forEach { provider ->
+            QuiziaRadioOption(
                 label = stringResource(id = provider.labelResId()),
                 selected = selectedProvider == provider,
                 onClick = { onProviderSelected(provider) },
@@ -176,69 +189,46 @@ private fun ApiKeySection(
     uiState: SettingsUiState,
     onDraftApiKeyChanged: (String) -> Unit,
     onChangeApiKeyClick: () -> Unit,
-    onSaveApiKeyClick: () -> Unit,
     onDeleteApiKeyClick: () -> Unit,
 ) {
-    QuiziaSettingsGroup(title = stringResource(id = R.string.settings_section_api_key)) {
+    QuiziaSettingsSection(
+        icon = Icons.Rounded.Key,
+        title = stringResource(id = R.string.settings_section_api_key),
+        description = stringResource(id = R.string.settings_section_api_key_description),
+    ) {
         if (uiState.isEditingApiKey) {
-            Column(verticalArrangement = Arrangement.spacedBy(QuiziaTheme.spacing.medium)) {
-                QuiziaPasswordTextField(
-                    value = uiState.draftApiKey,
-                    onValueChange = onDraftApiKeyChanged,
-                    label = stringResource(id = R.string.settings_api_key_label),
-                    placeholder = stringResource(id = R.string.settings_api_key_placeholder),
-                    modifier = Modifier.fillMaxWidth(),
-                )
-                QuiziaButton(
-                    text = stringResource(id = R.string.settings_api_key_save),
-                    onClick = onSaveApiKeyClick,
-                    enabled = uiState.canSaveApiKey,
-                    modifier = Modifier.fillMaxWidth(),
-                )
-            }
+            QuiziaPasswordTextField(
+                value = uiState.draftApiKey,
+                onValueChange = onDraftApiKeyChanged,
+                placeholder = stringResource(id = R.string.settings_api_key_placeholder),
+                modifier = Modifier.fillMaxWidth(),
+            )
         } else {
-            Column(verticalArrangement = Arrangement.spacedBy(QuiziaTheme.spacing.small)) {
-                QuiziaTextField(
-                    value = uiState.apiKeyMasked,
-                    onValueChange = {},
-                    label = stringResource(id = R.string.settings_api_key_label),
-                    enabled = false,
-                    modifier = Modifier.fillMaxWidth(),
+            QuiziaTextField(
+                value = uiState.apiKeyMasked,
+                onValueChange = {},
+                label = stringResource(id = R.string.settings_api_key_label),
+                enabled = false,
+                modifier = Modifier.fillMaxWidth(),
+            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                QuiziaTextButton(
+                    text = stringResource(id = R.string.settings_api_key_change),
+                    onClick = onChangeApiKeyClick,
                 )
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
+                if (uiState.hasStoredApiKey) {
                     QuiziaTextButton(
-                        text = stringResource(id = R.string.settings_api_key_change),
-                        onClick = onChangeApiKeyClick,
+                        text = stringResource(id = R.string.settings_api_key_delete),
+                        onClick = onDeleteApiKeyClick,
+                        isDestructive = true,
                     )
-                    if (uiState.hasStoredApiKey) {
-                        QuiziaTextButton(
-                            text = stringResource(id = R.string.settings_api_key_delete),
-                            onClick = onDeleteApiKeyClick,
-                            isDestructive = true,
-                        )
-                    }
                 }
             }
         }
-    }
-}
-
-@Composable
-private fun ThemeSection(
-    selectedTheme: AppTheme,
-    onThemeSelected: (AppTheme) -> Unit,
-) {
-    val themes = AppTheme.entries
-    QuiziaSettingsGroup(title = stringResource(id = R.string.settings_section_theme)) {
-        QuiziaSegmentedControl(
-            options = themes.map { theme -> stringResource(id = theme.labelResId()) },
-            selectedIndex = themes.indexOf(selectedTheme),
-            onOptionSelected = { index -> onThemeSelected(themes[index]) },
-        )
     }
 }
 
@@ -247,12 +237,37 @@ private fun QuestionCountSection(
     selectedCount: Int,
     onQuestionCountSelected: (Int) -> Unit,
 ) {
-    QuiziaSettingsGroup(title = stringResource(id = R.string.settings_section_questions)) {
-        QuiziaSegmentedControl(
+    QuiziaSettingsSection(
+        icon = Icons.AutoMirrored.Rounded.HelpOutline,
+        title = stringResource(id = R.string.settings_section_questions),
+        description = stringResource(id = R.string.settings_section_questions_description),
+    ) {
+        QuiziaChoiceChips(
             options = QUESTION_COUNT_OPTIONS.map { count -> count.toQuestionCountLabel() },
             selectedIndex = QUESTION_COUNT_OPTIONS.indexOf(selectedCount).coerceAtLeast(0),
             onOptionSelected = { index -> onQuestionCountSelected(QUESTION_COUNT_OPTIONS[index]) },
         )
+    }
+}
+
+@Composable
+private fun ThemeSection(
+    selectedTheme: AppTheme,
+    onThemeSelected: (AppTheme) -> Unit,
+) {
+    QuiziaSettingsSection(
+        icon = Icons.Rounded.Palette,
+        title = stringResource(id = R.string.settings_section_theme),
+        description = stringResource(id = R.string.settings_section_theme_description),
+    ) {
+        THEME_OPTIONS.forEach { theme ->
+            QuiziaRadioOption(
+                label = stringResource(id = theme.labelResId()),
+                description = theme.descriptionResId()?.let { stringResource(id = it) },
+                selected = theme == selectedTheme,
+                onClick = { onThemeSelected(theme) },
+            )
+        }
     }
 }
 
@@ -276,6 +291,11 @@ private fun AppTheme.labelResId(): Int = when (this) {
     AppTheme.SYSTEM -> R.string.settings_theme_system
 }
 
+private fun AppTheme.descriptionResId(): Int? = when (this) {
+    AppTheme.SYSTEM -> R.string.settings_theme_system_description
+    else -> null
+}
+
 @Preview(name = "Light", showBackground = true)
 @Preview(name = "Dark", showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
@@ -292,6 +312,33 @@ private fun SettingsScreenPreview() {
                     LlmProviderType.OPENAI,
                     LlmProviderType.CLAUDE,
                 ),
+            ),
+            onProviderSelected = {},
+            onThemeSelected = {},
+            onQuestionCountSelected = {},
+            onDraftApiKeyChanged = {},
+            onChangeApiKeyClick = {},
+            onSaveApiKeyClick = {},
+            onDeleteApiKeyClick = {},
+            onConfirmDeleteApiKey = {},
+            onDismissDeleteApiKey = {},
+            onBackClick = {},
+        )
+    }
+}
+
+@Preview(name = "Editing key – Light", showBackground = true)
+@Preview(name = "Editing key – Dark", showBackground = true, uiMode = UI_MODE_NIGHT_YES)
+@Composable
+private fun SettingsScreenEditingKeyPreview() {
+    QuiziaTheme {
+        SettingsScreen(
+            uiState = SettingsUiState(
+                selectedProvider = LlmProviderType.OPENAI,
+                theme = AppTheme.DARK,
+                questionCount = DEFAULT_QUESTION_COUNT,
+                availableProviders = listOf(LlmProviderType.GEMINI_API, LlmProviderType.OPENAI),
+                isEditingApiKey = true,
             ),
             onProviderSelected = {},
             onThemeSelected = {},

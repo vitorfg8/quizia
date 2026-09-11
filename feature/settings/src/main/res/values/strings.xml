@@ -2,15 +2,19 @@
 <resources>
     <string name="settings_title">Settings</string>
     <string name="settings_back_content_description">Back</string>
+    <string name="settings_save">Save</string>
     <string name="settings_section_provider">Language model</string>
+    <string name="settings_section_provider_description">Choose which AI generates your questions.</string>
     <string name="settings_section_api_key">API key</string>
+    <string name="settings_section_api_key_description">Paste the key from your AI provider here. It is stored encrypted on this device only.</string>
     <string name="settings_section_theme">Theme</string>
-    <string name="settings_section_questions">Questions per quiz</string>
+    <string name="settings_section_theme_description">Choose how the app looks.</string>
+    <string name="settings_section_questions">Number of questions</string>
+    <string name="settings_section_questions_description">How many questions each quiz has.</string>
     <string name="settings_api_key_label">API key</string>
-    <string name="settings_api_key_placeholder">Paste a new API key</string>
+    <string name="settings_api_key_placeholder">Enter your API key</string>
     <string name="settings_api_key_change">Change key</string>
     <string name="settings_api_key_delete">Delete key</string>
-    <string name="settings_api_key_save">Save key</string>
     <string name="settings_delete_key_title">Delete API key?</string>
     <string name="settings_delete_key_message">The stored key will be removed from this device. You can add another one later.</string>
     <string name="settings_delete_key_confirm">Delete</string>
@@ -18,6 +22,7 @@
     <string name="settings_theme_light">Light</string>
     <string name="settings_theme_dark">Dark</string>
     <string name="settings_theme_system">System</string>
+    <string name="settings_theme_system_description">Follows your device theme</string>
     <string name="settings_question_count_5">5</string>
     <string name="settings_question_count_10">10</string>
     <string name="settings_question_count_15">15</string>
