@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="brand_name_lead">Quiz</string>
+    <string name="brand_name_accent">ia</string>
+    <string name="password_field_show_value">Mostrar valor</string>
+    <string name="password_field_hide_value">Ocultar valor</string>
+</resources>

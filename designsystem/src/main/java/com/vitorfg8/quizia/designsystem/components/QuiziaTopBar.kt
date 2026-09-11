@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.vitorfg8.quizia.designsystem.QuiziaTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun QuiziaTopBar(
     title: String,
@@ -19,7 +18,10 @@ fun QuiziaTopBar(
     navigationIcon: @Composable () -> Unit = {},
     actions: @Composable RowScope.() -> Unit = {},
 ) {
-    TopAppBar(
+    QuiziaTopBar(
+        modifier = modifier,
+        navigationIcon = navigationIcon,
+        actions = actions,
         title = {
             Text(
                 text = title,
@@ -27,6 +29,20 @@ fun QuiziaTopBar(
                 color = QuiziaTheme.colorScheme.onSurface,
             )
         },
+    )
+}
+
+/** Top bar variant for screens that show the wordmark instead of a plain title. */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun QuiziaTopBar(
+    modifier: Modifier = Modifier,
+    navigationIcon: @Composable () -> Unit = {},
+    actions: @Composable RowScope.() -> Unit = {},
+    title: @Composable () -> Unit,
+) {
+    TopAppBar(
+        title = title,
         navigationIcon = navigationIcon,
         actions = actions,
         modifier = modifier,

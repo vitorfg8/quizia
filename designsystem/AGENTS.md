@@ -109,8 +109,49 @@ fun QuiziaButton(
 )
 ```
 
-- Primary action button (filled style)
-- Used for "Continue", "Next", "Back to Home"
+- Primary action button: a pill filled with `QuiziaTheme.extendedColors.brandGradient`
+- Falls back to a flat `surfaceVariant` fill when `enabled = false`
+- Used for "Continue", "Next", "Save", "Back to Home"
+
+---
+
+### QuiziaWordmark
+
+```kotlin
+@Composable
+fun QuiziaWordmark(
+    modifier: Modifier = Modifier,
+    style: TextStyle = QuiziaTheme.typography.titleLarge,
+)
+```
+
+- Renders the brand name as a dark "Quiz" followed by a purple "ia"
+- Used on the welcome screen and in the home top bar
+
+---
+
+### QuiziaBrandMark
+
+```kotlin
+@Composable
+fun QuiziaBrandMark(modifier: Modifier = Modifier)
+```
+
+- Rounded tile filled with the brand gradient, holding the Quizia sparkle
+- Same sparkle as the launcher icon
+
+---
+
+### QuiziaAmbientBackground
+
+```kotlin
+@Composable
+fun QuiziaAmbientBackground(modifier: Modifier = Modifier)
+```
+
+- Decorative welcome backdrop drawn on a `Canvas`: a diagonal wash plus lilac glows and sparkles
+- Every coordinate is a fraction of the canvas, so it scales to any screen
+- Colors come from `QuiziaTheme.extendedColors.ambientBase` and `ambientGlow`
 
 ---
 
@@ -184,20 +225,55 @@ fun CategoryCard(
 
 ---
 
-### LlmProviderRadioItem
+### QuiziaRadioOption
 
 ```kotlin
 @Composable
-fun LlmProviderRadioItem(
-    provider: LlmProviderType,
+fun QuiziaRadioOption(
+    label: String,
     selected: Boolean,
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    description: String? = null,
+)
+```
+
+- Exclusive choice row; the selected one sits on `primaryContainer` so it reads at a glance
+- Used for the provider list in `LlmSetupScreen` and `SettingsScreen`, and for the theme picker
+
+---
+
+### QuiziaChoiceChips
+
+```kotlin
+@Composable
+fun QuiziaChoiceChips(
+    options: List<String>,
+    selectedIndex: Int,
+    onOptionSelected: (Int) -> Unit,
     modifier: Modifier = Modifier,
 )
 ```
 
-- Row with radio button + provider name label
-- Used in `LlmSetupScreen` and `SettingsScreen`
+- Row of equally sized pills for a short exclusive set, such as the question count
+
+---
+
+### QuiziaSettingsSection
+
+```kotlin
+@Composable
+fun QuiziaSettingsSection(
+    icon: ImageVector,
+    title: String,
+    description: String,
+    modifier: Modifier = Modifier,
+    content: @Composable ColumnScope.() -> Unit,
+)
+```
+
+- Settings block: purple icon, title, a line of guidance, then the controls
+- Used for every section of `SettingsScreen`
 
 ---
 

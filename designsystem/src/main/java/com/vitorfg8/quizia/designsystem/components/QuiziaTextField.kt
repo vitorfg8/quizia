@@ -17,16 +17,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import com.vitorfg8.quizia.designsystem.QuiziaTheme
+import com.vitorfg8.quizia.designsystem.R
 
 @Composable
 fun QuiziaTextField(
     value: String,
     onValueChange: (String) -> Unit,
-    label: String,
     modifier: Modifier = Modifier,
+    label: String? = null,
     placeholder: String? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
@@ -37,52 +41,57 @@ fun QuiziaTextField(
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
-        label = { Text(text = label, style = QuiziaTheme.typography.bodyMedium) },
+        label = label?.let { { Text(text = it, style = QuiziaTheme.typography.bodyMedium) } },
         placeholder = placeholder?.let { { Text(text = it, style = QuiziaTheme.typography.bodyMedium) } },
         visualTransformation = visualTransformation,
         keyboardOptions = keyboardOptions,
         trailingIcon = trailingIcon,
         singleLine = singleLine,
         enabled = enabled,
+        textStyle = QuiziaTheme.typography.bodyLarge,
         shape = QuiziaTheme.shapes.medium,
         colors = OutlinedTextFieldDefaults.colors(
+            focusedContainerColor = QuiziaTheme.colorScheme.surface,
+            unfocusedContainerColor = QuiziaTheme.colorScheme.surface,
+            disabledContainerColor = QuiziaTheme.colorScheme.surface,
             focusedBorderColor = QuiziaTheme.colorScheme.primary,
             unfocusedBorderColor = QuiziaTheme.colorScheme.outline,
+            disabledBorderColor = QuiziaTheme.colorScheme.outline,
             focusedLabelColor = QuiziaTheme.colorScheme.primary,
             unfocusedLabelColor = QuiziaTheme.colorScheme.onSurfaceVariant,
+            focusedPlaceholderColor = QuiziaTheme.colorScheme.onSurfaceVariant,
+            unfocusedPlaceholderColor = QuiziaTheme.colorScheme.onSurfaceVariant,
             cursorColor = QuiziaTheme.colorScheme.primary,
         ),
         modifier = modifier,
     )
 }
 
+/** Text field for secrets: the value is masked until the player asks to reveal it. */
 @Composable
 fun QuiziaPasswordTextField(
     value: String,
     onValueChange: (String) -> Unit,
-    label: String,
     modifier: Modifier = Modifier,
+    label: String? = null,
     placeholder: String? = null,
 ) {
     var isVisible by remember { mutableStateOf(false) }
+    val toggleDescription = stringResource(
+        id = if (isVisible) R.string.password_field_hide_value else R.string.password_field_show_value,
+    )
     QuiziaTextField(
         value = value,
         onValueChange = onValueChange,
         label = label,
         placeholder = placeholder,
-        visualTransformation = if (isVisible) {
-            VisualTransformation.None
-        } else {
-            androidx.compose.ui.text.input.PasswordVisualTransformation()
-        },
-        keyboardOptions = KeyboardOptions(
-            keyboardType = androidx.compose.ui.text.input.KeyboardType.Password,
-        ),
+        visualTransformation = if (isVisible) VisualTransformation.None else PasswordVisualTransformation(),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         trailingIcon = {
             IconButton(onClick = { isVisible = !isVisible }) {
                 Icon(
-                    imageVector = if (isVisible) Icons.Rounded.Visibility else Icons.Rounded.VisibilityOff,
-                    contentDescription = null,
+                    imageVector = if (isVisible) Icons.Rounded.VisibilityOff else Icons.Rounded.Visibility,
+                    contentDescription = toggleDescription,
                     tint = QuiziaTheme.colorScheme.onSurfaceVariant,
                 )
             }
@@ -97,9 +106,9 @@ fun QuiziaPasswordTextField(
 private fun QuiziaTextFieldPreview() {
     QuiziaTheme {
         QuiziaTextField(
-            value = "sk-abc123",
+            value = "",
             onValueChange = {},
-            label = "API Key",
+            placeholder = "Enter your API key",
             modifier = Modifier.fillMaxWidth(),
         )
     }
@@ -113,7 +122,7 @@ private fun QuiziaPasswordTextFieldPreview() {
         QuiziaPasswordTextField(
             value = "sk-secret",
             onValueChange = {},
-            label = "API Key",
+            placeholder = "Enter your API key",
             modifier = Modifier.fillMaxWidth(),
         )
     }
