@@ -69,7 +69,7 @@ private fun WelcomeHeader(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.spacedBy(QuiziaTheme.spacing.medium),
     ) {
         QuiziaBrandMark()
-        QuiziaWordmark(style = QuiziaTheme.typography.displaySmall)
+        QuiziaWordmark(style = QuiziaTheme.typography.displayLarge)
         Text(
             text = stringResource(id = R.string.welcome_tagline),
             style = QuiziaTheme.typography.bodyLarge,
