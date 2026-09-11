@@ -13,9 +13,14 @@ class AppRouteTest {
     }
 
     @Test
-    fun `the results route carries the score and the total`() {
-        val actual = AppRoute.buildResultsRoute(score = 3, total = 5)
-        assertEquals("results/3/5", actual)
+    fun `the results route carries the category score total and elapsed time`() {
+        val actual = AppRoute.buildResultsRoute(
+            category = QuizCategory.ASTRONOMY.name,
+            score = 3,
+            total = 5,
+            elapsedMs = 392_000L,
+        )
+        assertEquals("results/ASTRONOMY/3/5/392000", actual)
     }
 
     @Test

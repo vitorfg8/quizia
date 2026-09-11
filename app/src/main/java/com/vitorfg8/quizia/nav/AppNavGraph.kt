@@ -69,25 +69,42 @@ internal fun AppNavGraph(
             val categoryName = backStackEntry.arguments?.getString(AppRoute.ARG_CATEGORY)
             QuizRoute(
                 category = categoryName.toQuizCategory(),
-                onQuizFinished = { score, total ->
-                    navController.navigate(AppRoute.buildResultsRoute(score, total)) {
+                onQuizFinished = { score, total, elapsedMs ->
+                    navController.navigate(
+                        AppRoute.buildResultsRoute(
+                            category = categoryName.toQuizCategory().name,
+                            score = score,
+                            total = total,
+                            elapsedMs = elapsedMs,
+                        ),
+                    ) {
                         popUpTo(AppRoute.HOME)
                     }
                 },
+                onBack = { navController.popBackStack() },
             )
         }
 
         composable(
             route = AppRoute.RESULTS,
             arguments = listOf(
+                navArgument(AppRoute.ARG_CATEGORY) { type = NavType.StringType },
                 navArgument(AppRoute.ARG_SCORE) { type = NavType.IntType },
                 navArgument(AppRoute.ARG_TOTAL) { type = NavType.IntType },
+                navArgument(AppRoute.ARG_ELAPSED_MS) { type = NavType.LongType },
             ),
         ) { backStackEntry ->
             val arguments = backStackEntry.arguments
+            val category = arguments?.getString(AppRoute.ARG_CATEGORY).toQuizCategory()
             ResultsRoute(
                 score = arguments?.getInt(AppRoute.ARG_SCORE) ?: 0,
                 total = arguments?.getInt(AppRoute.ARG_TOTAL) ?: 0,
+                elapsedMs = arguments?.getLong(AppRoute.ARG_ELAPSED_MS) ?: 0L,
+                onPlayAnother = {
+                    navController.navigate(AppRoute.buildQuizRoute(category.name)) {
+                        popUpTo(AppRoute.HOME)
+                    }
+                },
                 onBackToHome = {
                     navController.navigate(AppRoute.HOME) {
                         popUpTo(AppRoute.HOME) { inclusive = true }
