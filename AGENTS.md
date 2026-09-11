@@ -41,6 +41,7 @@ Each `:feature:*` module depends on `:designsystem` and `:core:domain`.
 | Navigation | Navigation Compose 2.10.1 |
 | HTTP | Retrofit 3.0.0 + OkHttp 5.5.0 + Gson 2.14.0 |
 | LLM SDK | Google Generative AI 0.9.0 (Gemini API + Nano) |
+| Confetti | Konfetti Compose 2.0.5 |
 | Preferences | DataStore Preferences 1.2.1 |
 | Secure storage | EncryptedSharedPreferences (security-crypto 1.1.0-alpha06) |
 | Static analysis | Detekt 1.23.8 |

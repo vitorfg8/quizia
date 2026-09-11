@@ -166,8 +166,9 @@ data class ResultsUiState(
 **Behavior:**
 - Back arrow returns to Home (same action as **Back to home**)
 - Green score ring when `score * 2 >= total`, red otherwise; centre shows `score/total` with no icon
+- Konfetti rains from the top when `score` is 80% or more of `total`
 - Subtitle: "You got X of Y questions right!"
-- Stats card: correct, wrong, elapsed time
+- Stats card: correct, wrong, elapsed time, separated by hairline dividers
 - **"Play another"** starts a new quiz in the same category
 - **"Back to home"** returns to `HomeScreen`
 

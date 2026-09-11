@@ -3,6 +3,7 @@ package com.vitorfg8.quizia.feature.results
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -18,6 +19,7 @@ import androidx.compose.material.icons.rounded.Cancel
 import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Refresh
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -26,8 +28,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,11 +42,25 @@ import com.vitorfg8.quizia.designsystem.components.QuiziaButton
 import com.vitorfg8.quizia.designsystem.components.QuiziaOutlinedButton
 import com.vitorfg8.quizia.designsystem.components.QuiziaScoreIndicator
 import com.vitorfg8.quizia.designsystem.components.QuiziaStatRow
+import nl.dionsegijn.konfetti.compose.KonfettiView
+import nl.dionsegijn.konfetti.core.Angle
+import nl.dionsegijn.konfetti.core.Party
+import nl.dionsegijn.konfetti.core.Position
+import nl.dionsegijn.konfetti.core.Spread
+import nl.dionsegijn.konfetti.core.emitter.Emitter
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
+import java.util.concurrent.TimeUnit
 
 private const val MILLIS_PER_SECOND = 1_000
 private const val SECONDS_PER_MINUTE = 60
+private const val CONFETTI_MIN_SPEED = 0f
+private const val CONFETTI_MAX_SPEED = 15f
+private const val CONFETTI_DAMPING = 0.9f
+private const val CONFETTI_EMIT_SECONDS = 5L
+private const val CONFETTI_PER_SECOND = 100
+private const val CONFETTI_ORIGIN_START = 0.0
+private const val CONFETTI_ORIGIN_END = 1.0
 
 @Composable
 fun ResultsRoute(
@@ -77,8 +96,26 @@ internal fun ResultsScreen(
     onBackToHomeClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
+    Box(modifier = modifier.fillMaxSize()) {
+        ResultsScaffold(
+            uiState = uiState,
+            onPlayAnotherClick = onPlayAnotherClick,
+            onBackToHomeClick = onBackToHomeClick,
+        )
+        if (uiState.shouldCelebrate) {
+            ResultsCelebration()
+        }
+    }
+}
+
+@Composable
+private fun ResultsScaffold(
+    uiState: ResultsUiState,
+    onPlayAnotherClick: () -> Unit,
+    onBackToHomeClick: () -> Unit,
+) {
     Scaffold(
-        modifier = modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize(),
         containerColor = QuiziaTheme.colorScheme.background,
     ) { innerPadding ->
         Column(
@@ -100,6 +137,43 @@ internal fun ResultsScreen(
         }
     }
 }
+
+@Composable
+private fun ResultsCelebration() {
+    val parties: List<Party> = rememberCelebrationParties()
+    if (!LocalInspectionMode.current) {
+        KonfettiView(
+            modifier = Modifier.fillMaxSize(),
+            parties = parties,
+        )
+    }
+}
+
+@Composable
+private fun rememberCelebrationParties(): List<Party> {
+    val colors: List<Int> = listOf(
+        QuiziaTheme.extendedColors.success.toArgb(),
+        QuiziaTheme.extendedColors.categoryGreen.toArgb(),
+        QuiziaTheme.colorScheme.primary.toArgb(),
+        QuiziaTheme.extendedColors.categoryViolet.toArgb(),
+    )
+    return remember(colors) { celebrationRain(colors) }
+}
+
+private fun celebrationRain(colors: List<Int>): List<Party> = listOf(
+    Party(
+        speed = CONFETTI_MIN_SPEED,
+        maxSpeed = CONFETTI_MAX_SPEED,
+        damping = CONFETTI_DAMPING,
+        angle = Angle.BOTTOM,
+        spread = Spread.ROUND,
+        colors = colors,
+        emitter = Emitter(duration = CONFETTI_EMIT_SECONDS, TimeUnit.SECONDS)
+            .perSecond(CONFETTI_PER_SECOND),
+        position = Position.Relative(CONFETTI_ORIGIN_START, CONFETTI_ORIGIN_START)
+            .between(Position.Relative(CONFETTI_ORIGIN_END, CONFETTI_ORIGIN_START)),
+    ),
+)
 
 @Composable
 private fun ResultsBackButton(onBackClick: () -> Unit) {
@@ -167,22 +241,21 @@ private fun ResultsStatsCard(
             color = QuiziaTheme.colorScheme.outline,
         ),
     ) {
-        Column(
-            modifier = Modifier.padding(QuiziaTheme.spacing.large),
-            verticalArrangement = Arrangement.spacedBy(QuiziaTheme.spacing.medium),
-        ) {
+        Column(modifier = Modifier.padding(QuiziaTheme.spacing.large)) {
             QuiziaStatRow(
                 icon = Icons.Rounded.CheckCircle,
                 label = stringResource(id = R.string.results_stat_correct),
                 value = uiState.score.toString(),
                 iconTint = QuiziaTheme.extendedColors.success,
             )
+            ResultsStatsDivider()
             QuiziaStatRow(
                 icon = Icons.Rounded.Cancel,
                 label = stringResource(id = R.string.results_stat_wrong),
                 value = uiState.wrongCount.toString(),
                 iconTint = QuiziaTheme.extendedColors.error,
             )
+            ResultsStatsDivider()
             QuiziaStatRow(
                 icon = Icons.Rounded.AccessTime,
                 label = stringResource(id = R.string.results_stat_time),
@@ -191,6 +264,15 @@ private fun ResultsStatsCard(
             )
         }
     }
+}
+
+@Composable
+private fun ResultsStatsDivider() {
+    HorizontalDivider(
+        modifier = Modifier.padding(vertical = QuiziaTheme.spacing.medium),
+        thickness = QuiziaTheme.sizes.borderHairline,
+        color = QuiziaTheme.colorScheme.outline,
+    )
 }
 
 @Composable

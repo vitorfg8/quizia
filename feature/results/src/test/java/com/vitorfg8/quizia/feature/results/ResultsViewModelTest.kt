@@ -54,6 +54,24 @@ class ResultsViewModelTest {
     }
 
     @Test
+    fun `a score of eighty percent or more celebrates`() {
+        val actual = createViewModel(score = 8, total = 10).uiState.value
+        assertTrue(actual.shouldCelebrate)
+    }
+
+    @Test
+    fun `a score below eighty percent does not celebrate`() {
+        val actual = createViewModel(score = 7, total = 10).uiState.value
+        assertFalse(actual.shouldCelebrate)
+    }
+
+    @Test
+    fun `a quiz with no questions does not celebrate`() {
+        val actual = createViewModel(score = 0, total = 0).uiState.value
+        assertFalse(actual.shouldCelebrate)
+    }
+
+    @Test
     fun `the elapsed time is shown as it was received`() {
         val actual = createViewModel(score = 8, total = 10, elapsedMs = INPUT_ELAPSED_MS).uiState.value
         assertEquals(INPUT_ELAPSED_MS, actual.elapsedMs)

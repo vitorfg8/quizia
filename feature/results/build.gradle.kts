@@ -29,6 +29,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.koin.androidx.compose)
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.konfetti.compose)
 
     debugImplementation(libs.androidx.compose.ui.tooling)
 
