@@ -96,7 +96,10 @@ class QuizViewModelTest {
         val viewModel = createViewModel()
         answerEveryQuestion(viewModel, correctAnswers = 2)
         val actual = viewModel.sideEffect.first()
-        assertEquals(QuizSideEffect.NavigateToResults(score = 2, total = QUESTION_COUNT), actual)
+        assertEquals(
+            QuizSideEffect.NavigateToResults(score = 2, total = QUESTION_COUNT, elapsedMs = 0L),
+            actual,
+        )
     }
 
     @Test
@@ -105,7 +108,10 @@ class QuizViewModelTest {
         val viewModel = createViewModel()
         answerEveryQuestion(viewModel, correctAnswers = 0)
         val actual = viewModel.sideEffect.first()
-        assertEquals(QuizSideEffect.NavigateToResults(score = 0, total = QUESTION_COUNT), actual)
+        assertEquals(
+            QuizSideEffect.NavigateToResults(score = 0, total = QUESTION_COUNT, elapsedMs = 0L),
+            actual,
+        )
     }
 
     @Test
@@ -157,7 +163,26 @@ class QuizViewModelTest {
         answerEveryQuestion(viewModel, correctAnswers = 1)
         viewModel.sideEffect.first()
         val actual = viewModel.sideEffect.first()
-        assertEquals(QuizSideEffect.NavigateToResults(score = 1, total = QUESTION_COUNT), actual)
+        assertEquals(
+            QuizSideEffect.NavigateToResults(score = 1, total = QUESTION_COUNT, elapsedMs = 0L),
+            actual,
+        )
+    }
+
+    @Test
+    fun `finishing the quiz reports how long it took`() = runTest {
+        var nowMs = START_TIME_MS
+        givenGeneratedQuiz(buildQuestions())
+        val viewModel = createViewModel(now = { nowMs })
+        nowMs = START_TIME_MS + ELAPSED_MS
+        answerEveryQuestion(viewModel, correctAnswers = 2)
+        val actual = viewModel.sideEffect.first()
+        val expected = QuizSideEffect.NavigateToResults(
+            score = 2,
+            total = QUESTION_COUNT,
+            elapsedMs = ELAPSED_MS,
+        )
+        assertEquals(expected, actual)
     }
 
     private fun answerEveryQuestion(viewModel: QuizViewModel, correctAnswers: Int) {
@@ -181,9 +206,10 @@ class QuizViewModelTest {
         coEvery { mockGenerateQuiz(INPUT_CATEGORY, any()) } returns Result.failure(failure)
     }
 
-    private fun createViewModel() = QuizViewModel(
+    private fun createViewModel(now: () -> Long = { 0L }) = QuizViewModel(
         category = INPUT_CATEGORY,
         generateQuiz = mockGenerateQuiz,
+        now = now,
     )
 
     private fun buildQuestions(): List<Question> = listOf(
@@ -195,5 +221,7 @@ class QuizViewModelTest {
     private companion object {
         val INPUT_CATEGORY = QuizCategory.ASTRONOMY
         const val QUESTION_COUNT = 3
+        const val START_TIME_MS = 1_000L
+        const val ELAPSED_MS = 392_000L
     }
 }

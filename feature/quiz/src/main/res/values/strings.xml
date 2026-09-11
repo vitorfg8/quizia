@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="quiz_title">%1$d/%2$d</string>
+    <string name="quiz_title">%1$d / %2$d</string>
     <string name="quiz_progress_content_description">Question %1$d of %2$d</string>
+    <string name="quiz_back_content_description">Back</string>
     <string name="quiz_loading">Writing your questions…</string>
     <string name="quiz_next">Next</string>
     <string name="quiz_see_results">See results</string>
-    <string name="quiz_correct_answer">Correct answer: %1$s</string>
+    <string name="quiz_feedback_correct">Correct!</string>
+    <string name="quiz_feedback_incorrect">Incorrect!</string>
+    <string name="quiz_feedback_fallback">The correct answer is %1$s.</string>
     <string name="quiz_retry">Try again</string>
 
     <string name="quiz_error_generic">The quiz could not be generated. Please try again.</string>

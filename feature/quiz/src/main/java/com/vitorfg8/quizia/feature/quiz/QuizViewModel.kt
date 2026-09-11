@@ -1,5 +1,6 @@
 package com.vitorfg8.quizia.feature.quiz
 
+import android.os.SystemClock
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vitorfg8.quizia.core.domain.exception.LlmException
@@ -18,6 +19,7 @@ import kotlinx.coroutines.launch
 class QuizViewModel(
     private val category: QuizCategory,
     private val generateQuiz: GenerateQuizUseCase,
+    private val now: () -> Long = { SystemClock.elapsedRealtime() },
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(QuizUiState(isLoading = true))
@@ -28,6 +30,7 @@ class QuizViewModel(
 
     private var questions: List<Question> = emptyList()
     private var score: Int = 0
+    private var startedAtMs: Long = 0L
 
     init {
         loadQuiz()
@@ -36,6 +39,7 @@ class QuizViewModel(
     fun loadQuiz() {
         _uiState.value = QuizUiState(isLoading = true)
         score = 0
+        startedAtMs = 0L
         viewModelScope.launch {
             generateQuiz(category)
                 .onSuccess { response -> showQuiz(response.questions) }
@@ -73,6 +77,7 @@ class QuizViewModel(
             return
         }
         questions = loadedQuestions
+        startedAtMs = now()
         _uiState.value = QuizUiState(totalQuestions = loadedQuestions.size)
         showQuestionAt(0)
     }
@@ -92,8 +97,15 @@ class QuizViewModel(
     }
 
     private fun finishQuiz() {
+        val elapsedMs = (now() - startedAtMs).coerceAtLeast(0L)
         viewModelScope.launch {
-            _sideEffect.send(QuizSideEffect.NavigateToResults(score, questions.size))
+            _sideEffect.send(
+                QuizSideEffect.NavigateToResults(
+                    score = score,
+                    total = questions.size,
+                    elapsedMs = elapsedMs,
+                ),
+            )
         }
     }
 
