@@ -2,14 +2,15 @@ package com.vitorfg8.quizia.feature.llmsetup
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,9 +22,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.vitorfg8.quizia.core.domain.model.LlmProviderType
 import com.vitorfg8.quizia.designsystem.QuiziaTheme
-import com.vitorfg8.quizia.designsystem.components.LlmProviderRadioItem
 import com.vitorfg8.quizia.designsystem.components.QuiziaButton
 import com.vitorfg8.quizia.designsystem.components.QuiziaPasswordTextField
+import com.vitorfg8.quizia.designsystem.components.QuiziaRadioOption
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -64,6 +65,7 @@ internal fun LlmSetupScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .safeDrawingPadding()
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = QuiziaTheme.spacing.large),
         ) {
@@ -85,22 +87,13 @@ internal fun LlmSetupScreen(
 
             Spacer(modifier = Modifier.padding(top = QuiziaTheme.spacing.large))
 
-            Surface(
-                modifier = Modifier.fillMaxWidth(),
-                shape = QuiziaTheme.shapes.large,
-                color = QuiziaTheme.colorScheme.surface,
-            ) {
-                Column {
-                    uiState.availableProviders.forEachIndexed { index, provider ->
-                        if (index > 0) {
-                            HorizontalDivider(color = QuiziaTheme.colorScheme.outlineVariant)
-                        }
-                        LlmProviderRadioItem(
-                            label = stringResource(id = provider.labelResId()),
-                            selected = uiState.selectedProvider == provider,
-                            onClick = { onProviderSelected(provider) },
-                        )
-                    }
+            Column(verticalArrangement = Arrangement.spacedBy(QuiziaTheme.spacing.small)) {
+                uiState.availableProviders.forEach { provider ->
+                    QuiziaRadioOption(
+                        label = stringResource(id = provider.labelResId()),
+                        selected = uiState.selectedProvider == provider,
+                        onClick = { onProviderSelected(provider) },
+                    )
                 }
             }
 
