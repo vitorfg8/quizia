@@ -40,6 +40,11 @@ class QuizJsonParser(
         val index = correctIndex
         requireNotNull(index) { "A question has no correct option." }
         require(index in validOptions.indices) { "The correct option index $index is out of range." }
-        return Question(text = questionText, options = validOptions, correctIndex = index)
+        return Question(
+            text = questionText,
+            options = validOptions,
+            correctIndex = index,
+            explanation = explanation.orEmpty().trim(),
+        )
     }
 }

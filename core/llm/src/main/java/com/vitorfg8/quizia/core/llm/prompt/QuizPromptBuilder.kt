@@ -21,6 +21,9 @@ class QuizPromptBuilder {
         appendLine("Each question must have exactly ${Question.OPTIONS_PER_QUESTION} options.")
         appendLine("Exactly one option must be correct.")
         appendLine("Vary the position of the correct option across questions.")
+        appendLine(
+            "For each question, write a one-sentence explanation of why the correct option is right.",
+        )
         appendLine("Respond with raw JSON only, with no markdown fence and no text around it.")
         appendLine("Use exactly this shape:")
         append(JSON_CONTRACT)
@@ -56,7 +59,7 @@ class QuizPromptBuilder {
         const val PORTUGUESE_TAG = "pt"
         const val CURRENT_EVENTS_MONTHS = 12
         val JSON_CONTRACT = """
-            {"questions":[{"text":"...","options":["...","...","...","..."],"correctIndex":0}]}
+            {"questions":[{"text":"...","options":["...","...","...","..."],"correctIndex":0,"explanation":"..."}]}
         """.trimIndent()
     }
 }

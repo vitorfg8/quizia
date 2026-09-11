@@ -58,6 +58,7 @@ data class Question(
     val text: String,
     val options: List<String>,    // always exactly 4 elements
     val correctIndex: Int,        // 0–3
+    val explanation: String = "",
 )
 
 data class AppSettings(
@@ -141,7 +142,7 @@ Each `LlmProvider` implementation must request quiz questions using a structured
 1. Specifies the category and language
 2. Requests exactly `questionCount` questions
 3. Requests exactly 4 options per question
-4. Requests a structured JSON response with fields: `text`, `options` (array of 4), `correctIndex` (0–3)
+4. Requests a structured JSON response with fields: `text`, `options` (array of 4), `correctIndex` (0–3), `explanation` (one sentence)
 5. Instructs the model not to include explanations outside the JSON structure
 
 ---

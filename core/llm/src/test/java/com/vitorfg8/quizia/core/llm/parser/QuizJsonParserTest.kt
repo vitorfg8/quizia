@@ -17,6 +17,7 @@ class QuizJsonParserTest {
             text = "Largest planet?",
             options = listOf("Mars", "Jupiter", "Venus", "Mercury"),
             correctIndex = 1,
+            explanation = "Jupiter is the largest planet in the Solar System.",
         )
         assertEquals(listOf(expected), actual.questions)
     }
@@ -104,9 +105,24 @@ class QuizJsonParserTest {
         assertTrue(actual.isFailure)
     }
 
+    @Test
+    fun `a missing explanation still becomes a question`() {
+        val inputResponse = """
+            {"questions":[{"text":"Largest planet?","options":["Mars","Jupiter","Venus","Mercury"],"correctIndex":1}]}
+        """.trimIndent()
+        val actual = parser.parse(inputResponse).getOrThrow()
+        val expected = Question(
+            text = "Largest planet?",
+            options = listOf("Mars", "Jupiter", "Venus", "Mercury"),
+            correctIndex = 1,
+            explanation = "",
+        )
+        assertEquals(listOf(expected), actual.questions)
+    }
+
     private companion object {
         val VALID_PAYLOAD = """
-            {"questions":[{"text":"Largest planet?","options":["Mars","Jupiter","Venus","Mercury"],"correctIndex":1}]}
+            {"questions":[{"text":"Largest planet?","options":["Mars","Jupiter","Venus","Mercury"],"correctIndex":1,"explanation":"Jupiter is the largest planet in the Solar System."}]}
         """.trimIndent()
     }
 }

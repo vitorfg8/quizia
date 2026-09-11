@@ -60,7 +60,9 @@ class QuizPromptBuilderTest {
     fun `the prompt describes the json contract`() {
         val actual = builder.build(buildRequest())
         assertTrue(actual.contains("\"correctIndex\""))
+        assertTrue(actual.contains("\"explanation\""))
         assertTrue(actual.contains("exactly 4 options"))
+        assertTrue(actual.contains("one-sentence explanation"))
     }
 
     private fun buildRequest(

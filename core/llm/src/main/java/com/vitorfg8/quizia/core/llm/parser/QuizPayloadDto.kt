@@ -10,4 +10,5 @@ internal data class QuestionDto(
     @SerializedName("text") val text: String? = null,
     @SerializedName("options") val options: List<String?>? = null,
     @SerializedName("correctIndex") val correctIndex: Int? = null,
+    @SerializedName("explanation") val explanation: String? = null,
 )
