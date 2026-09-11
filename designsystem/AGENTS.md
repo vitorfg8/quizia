@@ -232,17 +232,21 @@ fun QuiziaAnswerFeedback(
 
 ---
 
-### QuiziaResultHero
+### QuiziaScoreIndicator
 
 ```kotlin
 @Composable
-fun QuiziaResultHero(
+fun QuiziaScoreIndicator(
+    progress: Float,
+    label: String,
     isSuccess: Boolean,
     modifier: Modifier = Modifier,
 )
 ```
 
-- Large Material `Check` or `Close` in a filled circle, with quiet decorative sparks
+- Circular score ring: green when `isSuccess`, red otherwise
+- Centre shows only `label` (the fraction, e.g. `"8/10"`) — no star, check or close
+- Quiet decorative diamonds, dashes and squares around the ring
 
 ---
 
