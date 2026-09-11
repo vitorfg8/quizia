@@ -2,10 +2,12 @@
 <resources>
     <string name="results_title">Quiz complete!</string>
     <string name="results_subtitle">You got %1$d of %2$d questions right!</string>
+    <string name="results_score_fraction">%1$d/%2$d</string>
     <string name="results_stat_correct">Correct</string>
     <string name="results_stat_wrong">Wrong</string>
     <string name="results_stat_time">Time</string>
     <string name="results_duration">%1$d min %2$d s</string>
     <string name="results_play_another">Play another</string>
     <string name="results_back_to_home">Back to home</string>
+    <string name="results_back_content_description">Back</string>
 </resources>

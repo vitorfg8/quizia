@@ -2,10 +2,12 @@
 <resources>
     <string name="results_title">Quiz concluído!</string>
     <string name="results_subtitle">Você acertou %1$d de %2$d perguntas!</string>
+    <string name="results_score_fraction">%1$d/%2$d</string>
     <string name="results_stat_correct">Acertos</string>
     <string name="results_stat_wrong">Erros</string>
     <string name="results_stat_time">Tempo</string>
     <string name="results_duration">%1$d min %2$d s</string>
     <string name="results_play_another">Fazer outro</string>
     <string name="results_back_to_home">Voltar à home</string>
+    <string name="results_back_content_description">Voltar</string>
 </resources>

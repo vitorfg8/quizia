@@ -164,7 +164,8 @@ data class ResultsUiState(
 ```
 
 **Behavior:**
-- Green check hero when `score * 2 >= total`, red close otherwise
+- Back arrow returns to Home (same action as **Back to home**)
+- Green score ring when `score * 2 >= total`, red otherwise; centre shows `score/total` with no icon
 - Subtitle: "You got X of Y questions right!"
 - Stats card: correct, wrong, elapsed time
 - **"Play another"** starts a new quiz in the same category
