@@ -4,7 +4,16 @@ An AI-powered quiz app for Android. Questions are generated on demand by a large
 
 ## Screenshots
 
-> Coming soon.
+<p align="center">
+  <img src="docs/screenshots/welcome.png" width="210" alt="Welcome screen" />
+  <img src="docs/screenshots/llm-setup.png" width="210" alt="Choose your AI provider" />
+  <img src="docs/screenshots/home.png" width="210" alt="Home with quiz categories" />
+  <img src="docs/screenshots/settings.png" width="210" alt="Settings" />
+</p>
+
+<p align="center">
+  <sub>Welcome · Choose your AI · Home · Settings</sub>
+</p>
 
 ## Features
 
