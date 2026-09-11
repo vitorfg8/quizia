@@ -246,7 +246,6 @@ fun QuiziaScoreIndicator(
 
 - Circular score ring: green when `isSuccess`, red otherwise
 - Centre shows only `label` (the fraction, e.g. `"8/10"`) — no star, check or close
-- Quiet decorative diamonds, dashes and squares around the ring
 
 ---
 

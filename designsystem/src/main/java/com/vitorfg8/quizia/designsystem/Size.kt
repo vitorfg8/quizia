@@ -24,7 +24,6 @@ data class QuiziaSizes(
     val optionCardMinHeight: Dp = 64.dp,
     val categoryCardHeight: Dp = 136.dp,
     val scoreRingSize: Dp = 176.dp,
-    val scoreRingHalo: Dp = 224.dp,
     val scoreRingStroke: Dp = 12.dp,
     val progressBarHeight: Dp = 4.dp,
     val radioDot: Dp = 8.dp,
