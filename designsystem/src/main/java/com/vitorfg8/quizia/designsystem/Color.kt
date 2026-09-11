@@ -99,6 +99,14 @@ private val Orange600 = Color(0xFFF0703C)
 private val Orange300 = Color(0xFFFF9463)
 private val Leaf600 = Color(0xFF2FA36B)
 private val Leaf300 = Color(0xFF5CC894)
+private val Rose600 = Color(0xFFE25D8C)
+private val Rose300 = Color(0xFFF08BB0)
+private val Teal600 = Color(0xFF2B9EAF)
+private val Teal300 = Color(0xFF5EC9D4)
+private val Amber600 = Color(0xFFD4943C)
+private val Amber300 = Color(0xFFE8B86A)
+private val Orchid600 = Color(0xFFB85FD4)
+private val Orchid300 = Color(0xFFD494EA)
 
 private val AmbientLightTop = Color(0xFFF0EAFF)
 private val AmbientLightMid = Color(0xFFFAF8FE)
@@ -125,6 +133,10 @@ data class QuiziaExtendedColors(
     val categoryIndigo: Color,
     val categoryOrange: Color,
     val categoryGreen: Color,
+    val categoryRose: Color,
+    val categoryTeal: Color,
+    val categoryAmber: Color,
+    val categoryOrchid: Color,
     val ambientBase: List<Color>,
     val ambientGlow: Color,
 )
@@ -144,6 +156,10 @@ internal val LightExtendedColors = QuiziaExtendedColors(
     categoryIndigo = Indigo600,
     categoryOrange = Orange600,
     categoryGreen = Leaf600,
+    categoryRose = Rose600,
+    categoryTeal = Teal600,
+    categoryAmber = Amber600,
+    categoryOrchid = Orchid600,
     ambientBase = listOf(AmbientLightTop, AmbientLightMid, Color.White),
     ambientGlow = Lilac600,
 )
@@ -163,6 +179,10 @@ internal val DarkExtendedColors = QuiziaExtendedColors(
     categoryIndigo = Indigo300,
     categoryOrange = Orange300,
     categoryGreen = Leaf300,
+    categoryRose = Rose300,
+    categoryTeal = Teal300,
+    categoryAmber = Amber300,
+    categoryOrchid = Orchid300,
     ambientBase = listOf(AmbientDarkTop, AmbientDarkMid, CanvasDark),
     ambientGlow = Lilac400,
 )

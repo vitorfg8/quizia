@@ -156,12 +156,16 @@ private fun HomeGreeting(modifier: Modifier = Modifier) {
     }
 }
 
-/** The four accents that keep the category grid varied without leaving the brand palette. */
+/** Accents that keep the category grid varied without leaving the brand palette. */
 private enum class CategoryAccent {
     Violet,
     Indigo,
     Orange,
     Green,
+    Rose,
+    Teal,
+    Amber,
+    Orchid,
 }
 
 @Composable
@@ -170,6 +174,10 @@ private fun CategoryAccent.toColor(): Color = when (this) {
     CategoryAccent.Indigo -> QuiziaTheme.extendedColors.categoryIndigo
     CategoryAccent.Orange -> QuiziaTheme.extendedColors.categoryOrange
     CategoryAccent.Green -> QuiziaTheme.extendedColors.categoryGreen
+    CategoryAccent.Rose -> QuiziaTheme.extendedColors.categoryRose
+    CategoryAccent.Teal -> QuiziaTheme.extendedColors.categoryTeal
+    CategoryAccent.Amber -> QuiziaTheme.extendedColors.categoryAmber
+    CategoryAccent.Orchid -> QuiziaTheme.extendedColors.categoryOrchid
 }
 
 private data class CategoryUiModel(
@@ -182,22 +190,22 @@ private fun QuizCategory.toUiModel(): CategoryUiModel = when (this) {
     QuizCategory.GENERAL_KNOWLEDGE -> CategoryUiModel(
         icon = Icons.Rounded.EmojiObjects,
         labelResId = R.string.category_general_knowledge,
-        accent = CategoryAccent.Violet,
+        accent = CategoryAccent.Amber,
     )
     QuizCategory.HISTORY_AND_GEOGRAPHY -> CategoryUiModel(
         icon = Icons.Rounded.AccountBalance,
         labelResId = R.string.category_history_geography,
-        accent = CategoryAccent.Indigo,
+        accent = CategoryAccent.Violet,
     )
     QuizCategory.INTERNATIONAL_MUSIC -> CategoryUiModel(
         icon = Icons.Rounded.MusicNote,
         labelResId = R.string.category_international_music,
-        accent = CategoryAccent.Violet,
+        accent = CategoryAccent.Rose,
     )
     QuizCategory.MOVIES_AND_TV -> CategoryUiModel(
         icon = Icons.Rounded.Movie,
         labelResId = R.string.category_movies_tv,
-        accent = CategoryAccent.Violet,
+        accent = CategoryAccent.Orchid,
     )
     QuizCategory.SPORTS -> CategoryUiModel(
         icon = Icons.Rounded.SportsSoccer,
@@ -217,12 +225,12 @@ private fun QuizCategory.toUiModel(): CategoryUiModel = when (this) {
     QuizCategory.TECHNOLOGY -> CategoryUiModel(
         icon = Icons.Rounded.Code,
         labelResId = R.string.category_technology,
-        accent = CategoryAccent.Violet,
+        accent = CategoryAccent.Teal,
     )
     QuizCategory.GAMES -> CategoryUiModel(
         icon = Icons.Rounded.SportsEsports,
         labelResId = R.string.category_games,
-        accent = CategoryAccent.Violet,
+        accent = CategoryAccent.Rose,
     )
     QuizCategory.CURRENT_EVENTS -> CategoryUiModel(
         icon = Icons.Rounded.Newspaper,
