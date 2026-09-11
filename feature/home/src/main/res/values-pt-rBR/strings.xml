@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="home_title">Quizia</string>
     <string name="home_settings_content_description">Configurações</string>
+    <string name="home_greeting_title">Olá!</string>
+    <string name="home_greeting_subtitle">Escolha uma categoria e comece um novo quiz.</string>
 
     <string name="category_general_knowledge">Conhecimentos Gerais</string>
     <string name="category_history_geography">História e Geografia</string>
