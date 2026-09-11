@@ -1,17 +1,24 @@
 package com.vitorfg8.quizia.feature.results
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.EmojiEvents
-import androidx.compose.material3.Icon
+import androidx.compose.material.icons.rounded.Cancel
+import androidx.compose.material.icons.rounded.CheckCircle
+import androidx.compose.material.icons.rounded.Home
+import androidx.compose.material.icons.rounded.Refresh
+import androidx.compose.material.icons.rounded.Schedule
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -23,30 +30,38 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.vitorfg8.quizia.designsystem.QuiziaTheme
-import com.vitorfg8.quizia.designsystem.components.QUIZIA_MAX_STARS
 import com.vitorfg8.quizia.designsystem.components.QuiziaButton
-import com.vitorfg8.quizia.designsystem.components.QuiziaStarRating
+import com.vitorfg8.quizia.designsystem.components.QuiziaOutlinedButton
+import com.vitorfg8.quizia.designsystem.components.QuiziaResultHero
+import com.vitorfg8.quizia.designsystem.components.QuiziaStatRow
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
+
+private const val MILLIS_PER_SECOND = 1_000
+private const val SECONDS_PER_MINUTE = 60
 
 @Composable
 fun ResultsRoute(
     score: Int,
     total: Int,
+    elapsedMs: Long,
+    onPlayAnother: () -> Unit,
     onBackToHome: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: ResultsViewModel = koinViewModel { parametersOf(score, total) },
+    viewModel: ResultsViewModel = koinViewModel { parametersOf(score, total, elapsedMs) },
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     LaunchedEffect(Unit) {
         viewModel.sideEffect.collect { effect ->
             when (effect) {
+                ResultsSideEffect.NavigateToQuiz -> onPlayAnother()
                 ResultsSideEffect.NavigateToHome -> onBackToHome()
             }
         }
     }
     ResultsScreen(
         uiState = uiState,
+        onPlayAnotherClick = viewModel::onPlayAnotherClick,
         onBackToHomeClick = viewModel::onBackToHomeClick,
         modifier = modifier,
     )
@@ -55,6 +70,7 @@ fun ResultsRoute(
 @Composable
 internal fun ResultsScreen(
     uiState: ResultsUiState,
+    onPlayAnotherClick: () -> Unit,
     onBackToHomeClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -66,23 +82,23 @@ internal fun ResultsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
+                .verticalScroll(rememberScrollState())
                 .padding(QuiziaTheme.spacing.large),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(modifier = Modifier.weight(1f))
-            ResultsHero(uiState = uiState)
+            ResultsSummary(uiState = uiState)
             Spacer(modifier = Modifier.weight(1f))
-            QuiziaButton(
-                text = stringResource(id = R.string.results_back_to_home),
-                onClick = onBackToHomeClick,
-                modifier = Modifier.fillMaxWidth(),
+            ResultsActions(
+                onPlayAnotherClick = onPlayAnotherClick,
+                onBackToHomeClick = onBackToHomeClick,
             )
         }
     }
 }
 
 @Composable
-private fun ResultsHero(
+private fun ResultsSummary(
     uiState: ResultsUiState,
     modifier: Modifier = Modifier,
 ) {
@@ -91,12 +107,7 @@ private fun ResultsHero(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(QuiziaTheme.spacing.medium),
     ) {
-        Icon(
-            imageVector = Icons.Rounded.EmojiEvents,
-            contentDescription = null,
-            modifier = Modifier.size(QuiziaTheme.sizes.iconHuge),
-            tint = QuiziaTheme.colorScheme.primary,
-        )
+        QuiziaResultHero(isSuccess = uiState.isSuccess)
         Text(
             text = stringResource(id = R.string.results_title),
             style = QuiziaTheme.typography.headlineMedium,
@@ -104,65 +115,127 @@ private fun ResultsHero(
             textAlign = TextAlign.Center,
         )
         Text(
-            text = stringResource(id = uiState.performanceMessageResId),
+            text = stringResource(
+                id = R.string.results_subtitle,
+                uiState.score,
+                uiState.total,
+            ),
             style = QuiziaTheme.typography.bodyLarge,
             color = QuiziaTheme.colorScheme.onSurfaceVariant,
             textAlign = TextAlign.Center,
         )
-        Text(
-            text = stringResource(id = R.string.results_score, uiState.score, uiState.total),
-            style = QuiziaTheme.typography.displayLarge,
-            color = QuiziaTheme.colorScheme.primary,
+        ResultsStatsCard(uiState = uiState)
+    }
+}
+
+@Composable
+private fun ResultsStatsCard(
+    uiState: ResultsUiState,
+    modifier: Modifier = Modifier,
+) {
+    Surface(
+        modifier = modifier.fillMaxWidth(),
+        shape = QuiziaTheme.shapes.large,
+        color = QuiziaTheme.colorScheme.surface,
+        border = BorderStroke(
+            width = QuiziaTheme.sizes.borderHairline,
+            color = QuiziaTheme.colorScheme.outline,
+        ),
+    ) {
+        Column(
+            modifier = Modifier.padding(QuiziaTheme.spacing.medium),
+            verticalArrangement = Arrangement.spacedBy(QuiziaTheme.spacing.medium),
+        ) {
+            QuiziaStatRow(
+                icon = Icons.Rounded.CheckCircle,
+                label = stringResource(id = R.string.results_stat_correct),
+                value = uiState.score.toString(),
+                iconTint = QuiziaTheme.extendedColors.success,
+            )
+            HorizontalDivider(color = QuiziaTheme.colorScheme.outlineVariant)
+            QuiziaStatRow(
+                icon = Icons.Rounded.Cancel,
+                label = stringResource(id = R.string.results_stat_wrong),
+                value = uiState.wrongCount.toString(),
+                iconTint = QuiziaTheme.extendedColors.error,
+            )
+            HorizontalDivider(color = QuiziaTheme.colorScheme.outlineVariant)
+            QuiziaStatRow(
+                icon = Icons.Rounded.Schedule,
+                label = stringResource(id = R.string.results_stat_time),
+                value = formatElapsedDuration(uiState.elapsedMs),
+                iconTint = QuiziaTheme.colorScheme.onSurfaceVariant,
+            )
+        }
+    }
+}
+
+@Composable
+private fun ResultsActions(
+    onPlayAnotherClick: () -> Unit,
+    onBackToHomeClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        modifier = modifier.fillMaxWidth(),
+        verticalArrangement = Arrangement.spacedBy(QuiziaTheme.spacing.small),
+    ) {
+        QuiziaButton(
+            text = stringResource(id = R.string.results_play_another),
+            onClick = onPlayAnotherClick,
+            leadingIcon = Icons.Rounded.Refresh,
+            modifier = Modifier.fillMaxWidth(),
         )
-        Text(
-            text = stringResource(id = R.string.results_score_label),
-            style = QuiziaTheme.typography.labelLarge,
-            color = QuiziaTheme.colorScheme.onSurfaceVariant,
-        )
-        QuiziaStarRating(
-            filledStars = uiState.stars,
-            contentDescription = stringResource(
-                id = R.string.results_stars_content_description,
-                uiState.stars,
-                QUIZIA_MAX_STARS,
-            ),
+        QuiziaOutlinedButton(
+            text = stringResource(id = R.string.results_back_to_home),
+            onClick = onBackToHomeClick,
+            leadingIcon = Icons.Rounded.Home,
+            modifier = Modifier.fillMaxWidth(),
         )
     }
 }
 
-@Preview(name = "No stars – Light", showBackground = true)
-@Preview(name = "No stars – Dark", showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
-private fun ResultsScreenZeroStarsPreview() {
-    ResultsScreenPreview(score = 0, stars = 0, messageResId = R.string.results_message_zero_stars)
+private fun formatElapsedDuration(elapsedMs: Long): String {
+    val totalSeconds = (elapsedMs / MILLIS_PER_SECOND).coerceAtLeast(0L)
+    val minutes = totalSeconds / SECONDS_PER_MINUTE
+    val seconds = totalSeconds % SECONDS_PER_MINUTE
+    return stringResource(id = R.string.results_duration, minutes, seconds)
 }
 
-@Preview(name = "Three stars – Light", showBackground = true)
-@Preview(name = "Three stars – Dark", showBackground = true, uiMode = UI_MODE_NIGHT_YES)
-@Composable
-private fun ResultsScreenThreeStarsPreview() {
-    ResultsScreenPreview(score = 8, stars = 3, messageResId = R.string.results_message_three_stars)
-}
+private const val PREVIEW_TOTAL = 10
+private const val PREVIEW_SUCCESS_ELAPSED_MS = 392_000L
+private const val PREVIEW_FAILURE_ELAPSED_MS = 318_000L
 
-@Preview(name = "Five stars – Light", showBackground = true)
-@Preview(name = "Five stars – Dark", showBackground = true, uiMode = UI_MODE_NIGHT_YES)
+@Preview(name = "Success – Light", showBackground = true)
+@Preview(name = "Success – Dark", showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
-private fun ResultsScreenFiveStarsPreview() {
-    ResultsScreenPreview(score = 10, stars = 5, messageResId = R.string.results_message_five_stars)
-}
-
-private const val PREVIEW_TOTAL_QUESTIONS = 10
-
-@Composable
-private fun ResultsScreenPreview(score: Int, stars: Int, messageResId: Int) {
+private fun ResultsScreenSuccessPreview() {
     QuiziaTheme {
         ResultsScreen(
             uiState = ResultsUiState(
-                score = score,
-                total = PREVIEW_TOTAL_QUESTIONS,
-                stars = stars,
-                performanceMessageResId = messageResId,
+                score = 8,
+                total = PREVIEW_TOTAL,
+                elapsedMs = PREVIEW_SUCCESS_ELAPSED_MS,
             ),
+            onPlayAnotherClick = {},
+            onBackToHomeClick = {},
+        )
+    }
+}
+
+@Preview(name = "Failure – Light", showBackground = true)
+@Preview(name = "Failure – Dark", showBackground = true, uiMode = UI_MODE_NIGHT_YES)
+@Composable
+private fun ResultsScreenFailurePreview() {
+    QuiziaTheme {
+        ResultsScreen(
+            uiState = ResultsUiState(
+                score = 4,
+                total = PREVIEW_TOTAL,
+                elapsedMs = PREVIEW_FAILURE_ELAPSED_MS,
+            ),
+            onPlayAnotherClick = {},
             onBackToHomeClick = {},
         )
     }

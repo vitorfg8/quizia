@@ -1,8 +1,5 @@
 package com.vitorfg8.quizia.feature.results
 
-import com.vitorfg8.quizia.core.domain.usecase.CalculateStarRatingUseCase
-import io.mockk.every
-import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.first
@@ -12,13 +9,13 @@ import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class ResultsViewModelTest {
-
-    private val mockCalculateStarRating = mockk<CalculateStarRatingUseCase>()
 
     @Before
     fun setUp() {
@@ -32,77 +29,59 @@ class ResultsViewModelTest {
 
     @Test
     fun `the score is shown as it was received`() {
-        givenStarRating(3)
         val actual = createViewModel(score = 3, total = 5).uiState.value
         assertEquals(3, actual.score)
         assertEquals(5, actual.total)
+        assertEquals(2, actual.wrongCount)
     }
 
     @Test
-    fun `the star rating comes from the use case`() {
-        givenStarRating(4)
-        val actual = createViewModel(score = 4, total = 5).uiState.value
-        assertEquals(4, actual.stars)
+    fun `a majority of correct answers is a success`() {
+        val actual = createViewModel(score = 8, total = 10).uiState.value
+        assertTrue(actual.isSuccess)
     }
 
     @Test
-    fun `no star shows the encouraging message`() {
-        givenStarRating(0)
-        val actual = createViewModel(score = 0, total = 5).uiState.value
-        assertEquals(R.string.results_message_zero_stars, actual.performanceMessageResId)
+    fun `a quiz with no questions is not a success`() {
+        val actual = createViewModel(score = 0, total = 0).uiState.value
+        assertFalse(actual.isSuccess)
     }
 
     @Test
-    fun `one star shows its own message`() {
-        givenStarRating(1)
-        val actual = createViewModel(score = 1, total = 5).uiState.value
-        assertEquals(R.string.results_message_one_star, actual.performanceMessageResId)
+    fun `fewer than half the answers is a failure`() {
+        val actual = createViewModel(score = 4, total = 10).uiState.value
+        assertFalse(actual.isSuccess)
     }
 
     @Test
-    fun `two stars show their own message`() {
-        givenStarRating(2)
-        val actual = createViewModel(score = 2, total = 5).uiState.value
-        assertEquals(R.string.results_message_two_stars, actual.performanceMessageResId)
+    fun `the elapsed time is shown as it was received`() {
+        val actual = createViewModel(score = 8, total = 10, elapsedMs = INPUT_ELAPSED_MS).uiState.value
+        assertEquals(INPUT_ELAPSED_MS, actual.elapsedMs)
     }
 
     @Test
-    fun `three stars show their own message`() {
-        givenStarRating(3)
-        val actual = createViewModel(score = 3, total = 5).uiState.value
-        assertEquals(R.string.results_message_three_stars, actual.performanceMessageResId)
+    fun `tapping play another emits the quiz navigation effect`() = runTest {
+        val viewModel = createViewModel(score = 8, total = 10)
+        viewModel.onPlayAnotherClick()
+        val actual = viewModel.sideEffect.first()
+        assertEquals(ResultsSideEffect.NavigateToQuiz, actual)
     }
 
     @Test
-    fun `four stars show their own message`() {
-        givenStarRating(4)
-        val actual = createViewModel(score = 4, total = 5).uiState.value
-        assertEquals(R.string.results_message_four_stars, actual.performanceMessageResId)
-    }
-
-    @Test
-    fun `five stars show the perfect score message`() {
-        givenStarRating(5)
-        val actual = createViewModel(score = 5, total = 5).uiState.value
-        assertEquals(R.string.results_message_five_stars, actual.performanceMessageResId)
-    }
-
-    @Test
-    fun `tapping back emits the navigation effect`() = runTest {
-        givenStarRating(3)
+    fun `tapping back emits the home navigation effect`() = runTest {
         val viewModel = createViewModel(score = 3, total = 5)
         viewModel.onBackToHomeClick()
         val actual = viewModel.sideEffect.first()
         assertEquals(ResultsSideEffect.NavigateToHome, actual)
     }
 
-    private fun givenStarRating(stars: Int) {
-        every { mockCalculateStarRating(any(), any()) } returns stars
-    }
+    private fun createViewModel(
+        score: Int,
+        total: Int,
+        elapsedMs: Long = 0L,
+    ) = ResultsViewModel(score = score, total = total, elapsedMs = elapsedMs)
 
-    private fun createViewModel(score: Int, total: Int) = ResultsViewModel(
-        score = score,
-        total = total,
-        calculateStarRating = mockCalculateStarRating,
-    )
+    private companion object {
+        const val INPUT_ELAPSED_MS = 392_000L
+    }
 }

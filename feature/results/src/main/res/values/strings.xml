@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="results_title">Quiz complete!</string>
-    <string name="results_score">%1$d/%2$d</string>
-    <string name="results_score_label">correct</string>
-    <string name="results_stars_content_description">%1$d out of %2$d stars</string>
-    <string name="results_back_to_home">Play another</string>
-
-    <string name="results_message_zero_stars">Not this time. Every expert started somewhere.</string>
-    <string name="results_message_one_star">A start is a start. Try another round.</string>
-    <string name="results_message_two_stars">You are getting there. Keep going.</string>
-    <string name="results_message_three_stars">Solid work. You know your stuff.</string>
-    <string name="results_message_four_stars">Impressive. Almost flawless.</string>
-    <string name="results_message_five_stars">You did great!</string>
+    <string name="results_subtitle">You got %1$d of %2$d questions right!</string>
+    <string name="results_stat_correct">Correct</string>
+    <string name="results_stat_wrong">Wrong</string>
+    <string name="results_stat_time">Time</string>
+    <string name="results_duration">%1$d min %2$d s</string>
+    <string name="results_play_another">Play another</string>
+    <string name="results_back_to_home">Back to home</string>
 </resources>
