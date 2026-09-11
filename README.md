@@ -1,5 +1,8 @@
 # Quizia
 
+[![Quality](https://github.com/vitorfg8/quizia/actions/workflows/quality.yml/badge.svg?branch=main)](https://github.com/vitorfg8/quizia/actions/workflows/quality.yml)
+[![CodeQL](https://github.com/vitorfg8/quizia/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/vitorfg8/quizia/actions/workflows/codeql.yml)
+
 An AI-powered quiz app for Android. Questions are generated on demand by a large language model of your choice. The app follows a **Bring Your Own Key (BYOK)** model: you provide your own API key for cloud providers. On-device inference via Gemini Nano requires no key when supported by the device.
 
 ## Screenshots
