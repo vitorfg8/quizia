@@ -48,13 +48,13 @@ fun QuiziaStatRow(
             Text(
                 text = label,
                 style = QuiziaTheme.typography.bodyLarge,
-                color = QuiziaTheme.colorScheme.onSurface,
+                color = QuiziaTheme.colorScheme.onSurfaceVariant,
             )
         }
         Text(
             text = value,
             style = QuiziaTheme.typography.titleMedium,
-            color = QuiziaTheme.colorScheme.onSurface,
+            color = QuiziaTheme.colorScheme.onSurfaceVariant,
         )
     }
 }
@@ -64,17 +64,18 @@ fun QuiziaStatRow(
 @Composable
 private fun QuiziaStatRowPreview() {
     QuiziaTheme {
-        Column(
-            modifier = Modifier.padding(QuiziaTheme.spacing.medium),
-            verticalArrangement = Arrangement.spacedBy(QuiziaTheme.spacing.medium),
-        ) {
+        Column(modifier = Modifier.padding(QuiziaTheme.spacing.large)) {
             QuiziaStatRow(
                 icon = Icons.Rounded.CheckCircle,
                 label = "Correct",
                 value = "8",
                 iconTint = QuiziaTheme.extendedColors.success,
             )
-            HorizontalDivider(color = QuiziaTheme.colorScheme.outlineVariant)
+            HorizontalDivider(
+                modifier = Modifier.padding(vertical = QuiziaTheme.spacing.medium),
+                thickness = QuiziaTheme.sizes.borderHairline,
+                color = QuiziaTheme.colorScheme.outline,
+            )
             QuiziaStatRow(
                 icon = Icons.Rounded.Schedule,
                 label = "Time",
