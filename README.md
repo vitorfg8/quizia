@@ -8,14 +8,25 @@ An AI-powered quiz app for Android. Questions are generated on demand by a large
 ## Screenshots
 
 <p align="center">
-  <img src="docs/screenshots/welcome.png" width="210" alt="Welcome screen" />
-  <img src="docs/screenshots/llm-setup.png" width="210" alt="Choose your AI provider" />
-  <img src="docs/screenshots/home.png" width="210" alt="Home with quiz categories" />
-  <img src="docs/screenshots/settings.png" width="210" alt="Settings" />
+  <img src="docs/screenshots/welcome.png" width="210" alt="Welcome screen (light)" />
+  <img src="docs/screenshots/llm-setup.png" width="210" alt="Choose your AI provider (light)" />
+  <img src="docs/screenshots/home.png" width="210" alt="Home with quiz categories (light)" />
+  <img src="docs/screenshots/settings.png" width="210" alt="Settings (light)" />
 </p>
 
 <p align="center">
-  <sub>Welcome · Choose your AI · Home · Settings</sub>
+  <sub>Light — Welcome · Choose your AI · Home · Settings</sub>
+</p>
+
+<p align="center">
+  <img src="docs/screenshots/welcome-dark.png" width="210" alt="Welcome screen (dark)" />
+  <img src="docs/screenshots/llm-setup-dark.png" width="210" alt="Choose your AI provider (dark)" />
+  <img src="docs/screenshots/home-dark.png" width="210" alt="Home with quiz categories (dark)" />
+  <img src="docs/screenshots/settings-dark.png" width="210" alt="Settings (dark)" />
+</p>
+
+<p align="center">
+  <sub>Dark — Welcome · Choose your AI · Home · Settings</sub>
 </p>
 
 ## Features
