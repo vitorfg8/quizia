@@ -3,12 +3,16 @@ package com.vitorfg8.quizia.core.llm.prompt
 import com.vitorfg8.quizia.core.domain.model.Question
 import com.vitorfg8.quizia.core.domain.model.QuizCategory
 import com.vitorfg8.quizia.core.domain.model.QuizRequest
+import java.time.Clock
+import java.time.LocalDate
 
 /**
  * Builds the prompt every provider sends. The response contract is identical across providers
  * so a single [com.vitorfg8.quizia.core.llm.parser.QuizJsonParser] can read all of them.
  */
-class QuizPromptBuilder {
+class QuizPromptBuilder(
+    private val clock: Clock = Clock.systemDefaultZone(),
+) {
 
     fun build(request: QuizRequest): String = buildString {
         appendLine("You are a quiz generator.")
@@ -31,9 +35,11 @@ class QuizPromptBuilder {
 
     private fun StringBuilder.appendCurrentEventsRules(category: QuizCategory) {
         if (category != QuizCategory.CURRENT_EVENTS) return
+        val today: LocalDate = LocalDate.now(clock)
         appendLine(
             "Cover only widely reported global news from the last $CURRENT_EVENTS_MONTHS months.",
         )
+        appendLine("Today is $today. Use that date when applying the window.")
         appendLine("Skip rumors, local politics, speculation and events older than that window.")
     }
 

@@ -4,10 +4,14 @@ import com.vitorfg8.quizia.core.domain.model.QuizCategory
 import com.vitorfg8.quizia.core.domain.model.QuizRequest
 import org.junit.Assert.assertTrue
 import org.junit.Test
+import java.time.Clock
+import java.time.Instant
+import java.time.ZoneOffset
 
 class QuizPromptBuilderTest {
 
-    private val builder = QuizPromptBuilder()
+    private val clock: Clock = Clock.fixed(Instant.parse("2026-09-11T12:00:00Z"), ZoneOffset.UTC)
+    private val builder: QuizPromptBuilder = QuizPromptBuilder(clock)
 
     @Test
     fun `the prompt states the requested question count`() {
@@ -43,17 +47,30 @@ class QuizPromptBuilderTest {
 
     @Test
     fun `current events are limited to recent global news`() {
-        val actual = builder.build(buildRequest(category = QuizCategory.CURRENT_EVENTS))
+        val actual: String = builder.build(buildRequest(category = QuizCategory.CURRENT_EVENTS))
         assertTrue(actual.contains("current events"))
         assertTrue(actual.contains("last 12 months"))
         assertTrue(actual.contains("widely reported global news"))
+        assertTrue(actual.contains("Today is 2026-09-11."))
+    }
+
+    @Test
+    fun `current events use the date from the system clock`() {
+        val inputClock: Clock = Clock.fixed(
+            Instant.parse("2031-01-15T00:00:00Z"),
+            ZoneOffset.UTC,
+        )
+        val actual: String = QuizPromptBuilder(inputClock)
+            .build(buildRequest(category = QuizCategory.CURRENT_EVENTS))
+        assertTrue(actual.contains("Today is 2031-01-15."))
     }
 
     @Test
     fun `other categories do not mention the current events window`() {
-        val actual = builder.build(buildRequest(category = QuizCategory.NATURE))
+        val actual: String = builder.build(buildRequest(category = QuizCategory.NATURE))
         assertTrue(actual.contains("nature and the living world"))
         assertTrue(!actual.contains("last 12 months"))
+        assertTrue(!actual.contains("Today is"))
     }
 
     @Test

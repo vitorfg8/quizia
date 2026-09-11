@@ -23,6 +23,7 @@ import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.time.Clock
 import java.util.concurrent.TimeUnit
 
 private const val GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/"
@@ -34,7 +35,7 @@ private const val TIMEOUT_SECONDS = 90L
 
 val llmModule = module {
     single { Gson() }
-    single { QuizPromptBuilder() }
+    single { QuizPromptBuilder(clock = Clock.systemDefaultZone()) }
     single { QuizJsonParser(get()) }
     single { RemoteQuizGenerator(get(), get(), get()) }
 
