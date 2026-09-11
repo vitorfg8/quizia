@@ -7,9 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.CheckCircle
-import androidx.compose.material.icons.rounded.Schedule
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -20,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import com.vitorfg8.quizia.designsystem.QuiziaTheme
+import com.vitorfg8.quizia.designsystem.icons.QuiziaIcons
 
 /** One line in the results stats card: an icon and label on the left, the value on the right. */
 @Composable
@@ -66,7 +64,7 @@ private fun QuiziaStatRowPreview() {
     QuiziaTheme {
         Column(modifier = Modifier.padding(QuiziaTheme.spacing.large)) {
             QuiziaStatRow(
-                icon = Icons.Rounded.CheckCircle,
+                icon = QuiziaIcons.CheckCircle,
                 label = "Correct",
                 value = "8",
                 iconTint = QuiziaTheme.extendedColors.success,
@@ -77,7 +75,7 @@ private fun QuiziaStatRowPreview() {
                 color = QuiziaTheme.colorScheme.outline,
             )
             QuiziaStatRow(
-                icon = Icons.Rounded.Schedule,
+                icon = QuiziaIcons.AccessTime,
                 label = "Time",
                 value = "6 min 32 s",
                 iconTint = QuiziaTheme.colorScheme.onSurfaceVariant,

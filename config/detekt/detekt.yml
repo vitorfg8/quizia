@@ -10,6 +10,7 @@ complexity:
     active: true
     threshold: 60
     ignoreAnnotated: [ 'Composable' ]
+    excludes: [ '**/test/**', '**/androidTest/**', '**/designsystem/**/icons/**' ]
   LongParameterList:
     active: true
     functionThreshold: 7
@@ -21,10 +22,12 @@ complexity:
     thresholdInClasses: 15
     thresholdInObjects: 15
     ignoreAnnotatedFunctions: [ 'Composable', 'Preview' ]
+    excludes: [ '**/test/**', '**/androidTest/**', '**/designsystem/**/icons/**' ]
   CyclomaticComplexMethod:
     active: true
     threshold: 15
     ignoreAnnotated: [ 'Composable' ]
+    excludes: [ '**/test/**', '**/androidTest/**', '**/designsystem/**/icons/**' ]
 
 naming:
   FunctionNaming:
@@ -46,6 +49,7 @@ style:
     ignoreAnnotated: [ 'Preview' ]
     ignorePropertyDeclaration: true
     ignoreCompanionObjectPropertyDeclaration: true
+    excludes: [ '**/test/**', '**/androidTest/**', '**/designsystem/**/icons/**' ]
   MaxLineLength:
     active: true
     maxLineLength: 120

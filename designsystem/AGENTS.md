@@ -40,6 +40,20 @@ fun QuiziaTheme(
 | `Spacing.kt` | `QuiziaSpacing` — gaps, margins and padding |
 | `Size.kt` | `QuiziaSizes` — fixed component dimensions and elevations |
 | `Theme.kt` | `QuiziaTheme` composable + every `CompositionLocal` |
+| `icons/QuiziaIcons.kt` | Phosphor `ImageVector`s used by the app |
+
+### Icons
+
+All UI icons come from **Phosphor** (MIT), vendored in `designsystem/.../icons`. Features and
+components must use `QuiziaIcons` — never `androidx.compose.material.icons`.
+
+| Weight | Use |
+|---|---|
+| Duotone | Quiz category glyphs (`Lightbulb`, `Bank`, `SoccerBall`, …) |
+| Regular | `ArrowBack` only (`autoMirror = true`) |
+| Fill | Everything else (`Settings`, `Sparkle`, `Check`, …) |
+
+`Icon(..., tint = )` keeps Duotone's 20% secondary alpha (Compose `SrcIn`).
 
 ### The 4.dp grid
 
@@ -210,7 +224,7 @@ fun QuiziaCategoryChip(
 )
 ```
 
-- Compact lavender pill with a Material icon and the category name
+- Compact lavender pill with a category icon from `QuiziaIcons` and the category name
 - Used at the top of `QuizScreen`
 
 ---
@@ -357,7 +371,8 @@ fun QuiziaSettingsSection(
    `QuiziaTheme.shapes.*` only; all token values are multiples of 4.dp
 3. **No hardcoded strings** — all labels via `stringResource(R.string.…)`
 4. **No raw Material3 components** in `:feature:*` — always use the Quizia wrapper components above
-5. When a new shared component is needed, add it to `:designsystem` first, then use it in features
+5. **No Material Icons** — use `QuiziaIcons` from `:designsystem`
+6. When a new shared component is needed, add it to `:designsystem` first, then use it in features
 
 ---
 

@@ -8,8 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Key
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import com.vitorfg8.quizia.designsystem.QuiziaTheme
+import com.vitorfg8.quizia.designsystem.icons.QuiziaIcons
 
 /** A settings block: purple icon, title, one line of guidance, then the controls. */
 @Composable
@@ -69,7 +68,7 @@ fun QuiziaSettingsSection(
 private fun QuiziaSettingsSectionPreview() {
     QuiziaTheme {
         QuiziaSettingsSection(
-            icon = Icons.Rounded.Key,
+            icon = QuiziaIcons.Key,
             title = "API key",
             description = "Paste the key from your AI provider here.",
             modifier = Modifier.padding(QuiziaTheme.spacing.medium),

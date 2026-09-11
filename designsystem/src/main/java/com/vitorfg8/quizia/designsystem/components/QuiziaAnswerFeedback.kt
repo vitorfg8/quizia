@@ -10,9 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Check
-import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -22,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import com.vitorfg8.quizia.designsystem.QuiziaTheme
+import com.vitorfg8.quizia.designsystem.icons.QuiziaIcons
 
 /** Banner shown after an answer, naming whether it was right and why. */
 @Composable
@@ -81,7 +79,7 @@ private fun FeedbackGlyph(isCorrect: Boolean) {
         contentAlignment = Alignment.Center,
     ) {
         Icon(
-            imageVector = if (isCorrect) Icons.Rounded.Check else Icons.Rounded.Close,
+            imageVector = if (isCorrect) QuiziaIcons.Check else QuiziaIcons.Close,
             contentDescription = null,
             modifier = Modifier.size(QuiziaTheme.sizes.iconMedium),
             tint = onGlyphColor,

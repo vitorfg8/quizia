@@ -4,8 +4,6 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -13,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.tooling.preview.Preview
 import com.vitorfg8.quizia.designsystem.QuiziaTheme
+import com.vitorfg8.quizia.designsystem.icons.QuiziaIcons
 
 /** Rounded purple tile with the Quizia sparkle, used as the app's visual signature. */
 @Composable
@@ -27,7 +26,7 @@ fun QuiziaBrandMark(modifier: Modifier = Modifier) {
         contentAlignment = Alignment.Center,
     ) {
         Icon(
-            imageVector = Icons.Rounded.AutoAwesome,
+            imageVector = QuiziaIcons.Sparkle,
             contentDescription = null,
             modifier = Modifier.size(QuiziaTheme.sizes.iconLarge),
             tint = QuiziaTheme.extendedColors.onBrandGradient,

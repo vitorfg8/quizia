@@ -3,9 +3,6 @@ package com.vitorfg8.quizia.designsystem.components
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Visibility
-import androidx.compose.material.icons.rounded.VisibilityOff
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -23,6 +20,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import com.vitorfg8.quizia.designsystem.QuiziaTheme
+import com.vitorfg8.quizia.designsystem.icons.QuiziaIcons
 import com.vitorfg8.quizia.designsystem.R
 
 @Composable
@@ -90,7 +88,7 @@ fun QuiziaPasswordTextField(
         trailingIcon = {
             IconButton(onClick = { isVisible = !isVisible }) {
                 Icon(
-                    imageVector = if (isVisible) Icons.Rounded.VisibilityOff else Icons.Rounded.Visibility,
+                    imageVector = if (isVisible) QuiziaIcons.VisibilityOff else QuiziaIcons.Visibility,
                     contentDescription = toggleDescription,
                     tint = QuiziaTheme.colorScheme.onSurfaceVariant,
                 )

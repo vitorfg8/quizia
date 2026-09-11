@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.EmojiObjects
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -17,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import com.vitorfg8.quizia.designsystem.QuiziaTheme
+import com.vitorfg8.quizia.designsystem.icons.QuiziaIcons
 
 /** Compact pill that names the quiz category without competing with the question. */
 @Composable
@@ -52,7 +51,7 @@ fun QuiziaCategoryChip(
 private fun QuiziaCategoryChipPreview() {
     QuiziaTheme {
         QuiziaCategoryChip(
-            icon = Icons.Rounded.EmojiObjects,
+            icon = QuiziaIcons.Lightbulb,
             label = "General Knowledge",
             modifier = Modifier.padding(QuiziaTheme.spacing.medium),
         )

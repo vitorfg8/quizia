@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -22,6 +20,7 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import com.vitorfg8.quizia.designsystem.QuiziaTheme
+import com.vitorfg8.quizia.designsystem.icons.QuiziaIcons
 
 /** Primary pill action, filled with the brand gradient while enabled. */
 @Composable
@@ -98,7 +97,7 @@ private fun QuiziaButtonIconPreview() {
         QuiziaButton(
             text = "Play another",
             onClick = {},
-            leadingIcon = Icons.Rounded.Refresh,
+            leadingIcon = QuiziaIcons.Refresh,
             modifier = Modifier.fillMaxWidth(),
         )
     }

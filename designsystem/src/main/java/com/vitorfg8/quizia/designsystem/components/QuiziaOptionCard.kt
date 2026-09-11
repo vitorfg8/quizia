@@ -13,9 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Check
-import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -26,6 +23,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.vitorfg8.quizia.designsystem.QuiziaTheme
+import com.vitorfg8.quizia.designsystem.icons.QuiziaIcons
 
 /** How an answer option should read once the quiz has judged it. */
 enum class OptionCardState {
@@ -138,7 +136,7 @@ private fun SelectedOptionRadio(
 private fun OptionResultMark(state: OptionCardState) {
     val isCorrect = state == OptionCardState.Correct
     Icon(
-        imageVector = if (isCorrect) Icons.Rounded.Check else Icons.Rounded.Close,
+        imageVector = if (isCorrect) QuiziaIcons.Check else QuiziaIcons.Close,
         contentDescription = null,
         modifier = Modifier.size(QuiziaTheme.sizes.iconMedium),
         tint = if (isCorrect) {
