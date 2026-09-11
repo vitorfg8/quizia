@@ -24,7 +24,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.tooling.preview.Preview
 import com.vitorfg8.quizia.designsystem.QuiziaTheme
 
@@ -89,8 +88,7 @@ private fun OptionCardContent(
 private fun OptionRadio(state: OptionCardState) {
     when (state) {
         OptionCardState.Default -> EmptyOptionRadio()
-        OptionCardState.Correct -> FilledOptionMark(
-            icon = Icons.Rounded.Check,
+        OptionCardState.Correct -> SelectedOptionRadio(
             containerColor = QuiziaTheme.extendedColors.success,
             contentColor = QuiziaTheme.extendedColors.onSuccess,
         )
@@ -149,28 +147,6 @@ private fun OptionResultMark(state: OptionCardState) {
             QuiziaTheme.extendedColors.error
         },
     )
-}
-
-@Composable
-private fun FilledOptionMark(
-    icon: ImageVector,
-    containerColor: Color,
-    contentColor: Color,
-) {
-    Box(
-        modifier = Modifier
-            .size(QuiziaTheme.sizes.iconMedium)
-            .clip(CircleShape)
-            .background(containerColor),
-        contentAlignment = Alignment.Center,
-    ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = null,
-            modifier = Modifier.size(QuiziaTheme.sizes.iconSmall),
-            tint = contentColor,
-        )
-    }
 }
 
 @Composable

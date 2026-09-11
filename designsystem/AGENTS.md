@@ -193,7 +193,7 @@ fun QuiziaOptionCard(
 
 - Background and hairline driven by `state`. Every option has a radio on the left:
   - `Default` → `surface` + outline, empty radio
-  - `Correct` → `extendedColors.successContainer`, filled check radio, trailing check
+  - `Correct` → `extendedColors.successContainer`, selected green radio, trailing check
   - `Wrong` → `extendedColors.errorContainer`, selected red radio, trailing close
 - `enabled = false` after an answer has been revealed (prevents re-selection)
 
