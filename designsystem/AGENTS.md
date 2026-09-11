@@ -326,6 +326,8 @@ fun QuiziaRadioOption(
 ```
 
 - Exclusive choice row; the selected one sits on `primaryContainer` so it reads at a glance
+- Minimum height is `QuiziaTheme.sizes.radioOptionMinHeight` (two-line list item) so
+  provider and theme options share one size, with or without a description
 - Used for the provider list in `LlmSetupScreen` and `SettingsScreen`, and for the theme picker
 
 ---

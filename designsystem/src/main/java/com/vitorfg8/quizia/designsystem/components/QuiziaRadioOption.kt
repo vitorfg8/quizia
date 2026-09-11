@@ -4,6 +4,7 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.selection.selectable
@@ -30,6 +31,7 @@ fun QuiziaRadioOption(
     Surface(
         modifier = modifier
             .fillMaxWidth()
+            .defaultMinSize(minHeight = QuiziaTheme.sizes.radioOptionMinHeight)
             .selectable(selected = selected, role = Role.RadioButton, onClick = onClick),
         shape = QuiziaTheme.shapes.large,
         color = if (selected) {
@@ -87,7 +89,11 @@ private fun QuiziaRadioOptionPreview() {
                 selected = true,
                 onClick = {},
             )
-            QuiziaRadioOption(label = "Light", selected = false, onClick = {})
+            QuiziaRadioOption(
+                label = "Gemini API",
+                selected = false,
+                onClick = {},
+            )
         }
     }
 }

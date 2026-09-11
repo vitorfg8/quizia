@@ -22,6 +22,7 @@ data class QuiziaSizes(
     val categoryChipHeight: Dp = 32.dp,
     val minTouchTarget: Dp = 48.dp,
     val optionCardMinHeight: Dp = 64.dp,
+    val radioOptionMinHeight: Dp = 72.dp,
     val categoryCardHeight: Dp = 136.dp,
     val scoreRingSize: Dp = 176.dp,
     val scoreRingStroke: Dp = 12.dp,
