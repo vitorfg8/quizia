@@ -139,10 +139,10 @@ sealed interface QuizSideEffect {
 - Back button, progress bar and `current / total` counter at the top
 - Category chip under the header
 - Question text left-aligned
-- 4 option cards with a radio on the left:
-  - Default: surface + hairline outline, empty radio
-  - Selected correct: pale green, filled check radio, trailing check
-  - Selected wrong: pale red, selected radio, trailing close
+- 4 option cards with a radio on the left (same layout as theme/LLM radios):
+  - Default: surface, unselected radio
+  - Selected correct: pale green, selected green radio
+  - Selected wrong: pale red, selected red radio
   - Other options stay default after reveal
 - Feedback banner after a tap: explanation from the LLM, or a fallback naming the correct option
 - **"Next"** / **"See results"** shown only after an option is selected
